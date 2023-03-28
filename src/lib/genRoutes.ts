@@ -1,5 +1,5 @@
 import path from 'path';
-import readContents from './modules/readContents';
+import readContents from './util/readContents';
 
 export default async function genRoutes(cwd: string) {
 	const routeDir = path.join(cwd, 'pages');

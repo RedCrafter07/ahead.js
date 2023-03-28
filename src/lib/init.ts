@@ -1,7 +1,7 @@
 import { existsSync } from 'fs';
 import { symlink } from 'fs/promises';
 import path from 'path';
-import initDirs from './modules/initDirs';
+import initDirs from './util/initDirs';
 
 export default async function init(cwd: string) {
 	if (await existsSync(path.join(cwd, '.ahead'))) return;
