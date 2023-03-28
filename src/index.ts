@@ -14,7 +14,7 @@ const aheadDir = path.join(cwd, '.ahead');
 	const routes = await genRoutes(cwd);
 
 	await writeFile(
-		path.join(aheadDir, 'routes.json'),
+		path.join(path.join(aheadDir, 'build', 'pre'), 'routes.json'),
 		JSON.stringify(routes, null, 2),
 	);
 })();
