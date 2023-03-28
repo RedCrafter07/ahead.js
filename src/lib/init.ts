@@ -8,16 +8,15 @@ export default async function init(cwd: string) {
 
 	await initDirs(
 		[
-			['.ahead', 'dist'],
+			['.ahead', 'build', 'dist'],
 			['.ahead', 'config'],
-			['.ahead', 'routes'],
-			['.ahead', 'preBuild', 'client'],
+			['.ahead', 'build', 'pre', 'client'],
 		].map((p) => path.join(cwd, ...p)),
 	);
 
 	await createSymlink(
 		path.join(cwd, 'pages'),
-		path.join(cwd, '.ahead', 'preBuild', 'client', 'routes'),
+		path.join(cwd, '.ahead', 'build', 'pre', 'client', 'routes'),
 	);
 }
 
