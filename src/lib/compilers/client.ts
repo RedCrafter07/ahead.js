@@ -11,7 +11,7 @@ export default async function compileClient(dir: string, htmlTemplate: string) {
 		output: {
 			path: `${dir}/dist/client`,
 			filename: '[name].js',
-			publicPath: '/.ahead',
+			publicPath: '/.ahead/',
 		},
 		optimization: {
 			splitChunks: {
