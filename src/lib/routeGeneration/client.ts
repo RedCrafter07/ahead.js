@@ -6,7 +6,7 @@ interface Route {
 	children: (Route | { index: true; element: string })[];
 }
 
-interface IndexedRoute {
+export interface IndexedRoute {
 	path: string;
 	fileLocation: string;
 }
