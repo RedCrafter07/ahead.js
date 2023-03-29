@@ -11,6 +11,7 @@ export default async function init(cwd: string) {
 			['.ahead', 'build', 'dist'],
 			['.ahead', 'config'],
 			['.ahead', 'build', 'pre', 'client'],
+			['.ahead', 'build', 'pre', 'server'],
 		].map((p) => path.join(cwd, ...p)),
 	);
 
