@@ -1,6 +1,6 @@
 import path from 'path';
+import { aheadDir } from '..';
 import readContents from './util/readContents';
-import { RouteObject } from 'react-router-dom';
 
 export default async function getRoutes(cwd: string) {
 	const routeDir = path.join(cwd, '.ahead', 'build', 'pre', 'client', 'routes');
@@ -45,7 +45,26 @@ interface IndexedRoute {
 	fileLocation: string;
 }
 
-export async function genRouterData(indexed: IndexedRoute[]): Promise<Route[]> {
+function transformImports(data: IndexedRoute[]): {
+	data: IndexedRoute[];
+	imports: string[];
+} {
+	const imports = [];
+	for (const d of data) {
+		const i = imports.indexOf(d.fileLocation);
+		if (i > -1) d.fileLocation = '<Import_' + i + ' />';
+		else {
+			imports.push(d.fileLocation);
+			d.fileLocation = '<Import_' + (imports.length - 1) + ' />';
+		}
+	}
+
+	return { data, imports };
+}
+
+// Credit: FishingHacks
+// Modified by RedCrafter07
+function transformToRoutes(indexed: IndexedRoute[]): Route[] {
 	const router: Route[] = [];
 
 	for (const i of indexed) {
@@ -92,4 +111,28 @@ export async function genRouterData(indexed: IndexedRoute[]): Promise<Route[]> {
 	}
 
 	return router;
+}
+
+export function transform(routes: IndexedRoute[]) {
+	let file = '';
+
+	const { data, imports } = transformImports(routes);
+	const router = transformToRoutes(data);
+
+	for (let i = 0; i < imports.length; ++i)
+		file += `const Import_${i} = React.lazy(() => import(${JSON.stringify(
+			`.${imports[i]
+				.split('.')
+				.slice(0, -1)
+				.join('.')
+				.replaceAll(path.sep, '/')
+				.slice(path.join(aheadDir, 'build', 'pre', 'client').length)}`,
+		)}));\n`;
+	file += '\n\nexport default ';
+	file += JSON.stringify(router, null, 2);
+
+	return file.replaceAll(
+		/"element":\s*"(<Import_[0-9]+ \/>)"/g,
+		'"element": $1',
+	); // turn "<Element_1 />" to <Element_1>
 }
