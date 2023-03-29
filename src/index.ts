@@ -1,12 +1,12 @@
 import { copyFile, writeFile } from 'fs/promises';
 import path from 'path';
 import compileClient from './lib/compilers/client';
-import getRoutes, { genRouterData } from './lib/genRoutes';
+import getRoutes, { transform } from './lib/genRoutes';
 import init from './lib/init';
 import express from 'express';
 
 const cwd = process.cwd();
-const aheadDir = path.join(cwd, '.ahead');
+export const aheadDir = path.join(cwd, '.ahead');
 
 (async () => {
 	await init(cwd);
@@ -15,13 +15,10 @@ const aheadDir = path.join(cwd, '.ahead');
 
 	const routes = await getRoutes(cwd);
 
-	const data = await genRouterData(routes);
-
 	await writeFile(
-		path.join(path.join(aheadDir, 'build', 'pre'), 'routes.json'),
-		JSON.stringify(data, null, 2),
+		path.join(path.join(aheadDir, 'build', 'pre', 'client'), 'routes.tsx'),
+		`import React from "react";\n${transform(routes)}`,
 	);
-
 	await copyFile(
 		path.join(__dirname, 'lib', 'client', 'router.tsx'),
 		path.join(aheadDir, 'build', 'pre', 'client', 'router.tsx'),
