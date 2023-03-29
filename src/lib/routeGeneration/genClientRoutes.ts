@@ -1,6 +1,6 @@
 import path from 'path';
-import { aheadDir } from '..';
-import readContents from './util/readContents';
+import { aheadDir } from '../..';
+import readContents from '../util/readContents';
 
 export default async function getRoutes(cwd: string) {
 	const routeDir = path.join(cwd, '.ahead', 'build', 'pre', 'client', 'routes');

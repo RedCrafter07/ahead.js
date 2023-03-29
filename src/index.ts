@@ -1,7 +1,7 @@
 import { copyFile, writeFile } from 'fs/promises';
 import path from 'path';
 import compileClient from './lib/compilers/client';
-import getRoutes, { transform } from './lib/genClientRoutes';
+import getRoutes, { transform } from './lib/routeGeneration/genClientRoutes';
 import init from './lib/init';
 import express from 'express';
 
