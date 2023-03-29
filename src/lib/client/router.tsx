@@ -2,7 +2,7 @@ import React from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 // @ts-ignore
-import routes from '../routes.json';
+import routes from './routes';
 
 const router = createBrowserRouter(routes);
 
