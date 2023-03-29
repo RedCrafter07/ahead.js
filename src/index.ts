@@ -1,9 +1,11 @@
 import { copyFile, writeFile } from 'fs/promises';
 import path from 'path';
 import compileClient from './lib/compilers/client';
-import getRoutes, { transform } from './lib/routeGeneration/client';
+import { transform } from './lib/routeGeneration/client';
 import init from './lib/init';
 import express from 'express';
+import getRoutes from './lib/routeGeneration/getRoutes';
+import generateServerRoutes from './lib/routeGeneration/server';
 
 const cwd = process.cwd();
 export const aheadDir = path.join(cwd, '.ahead');
@@ -28,21 +30,13 @@ export const aheadDir = path.join(cwd, '.ahead');
 		path.join(aheadDir, 'build', 'pre', 'client', 'index.tsx'),
 	);
 
+	await writeFile(
+		path.join(aheadDir, 'build', 'pre', 'server', 'index.ts'),
+		generateServerRoutes(routes),
+	);
+
 	await compileClient(
 		path.join(aheadDir, 'build'),
 		path.join(__dirname, 'lib', 'client', 'template.html'),
 	);
-
-	const app = express();
-
-	app.use(
-		'/.ahead',
-		express.static(path.join(aheadDir, 'build', 'dist', 'client')),
-	);
-
-	app.get('*', (req, res) => {
-		res.sendFile(path.join(aheadDir, 'build', 'dist', 'client', 'index.html'));
-	});
-
-	app.listen(3000);
 })();
