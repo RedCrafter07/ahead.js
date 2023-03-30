@@ -6,6 +6,7 @@ import init from './lib/init';
 import express from 'express';
 import getRoutes from './lib/routeGeneration/getRoutes';
 import generateServerRoutes from './lib/routeGeneration/server';
+import compileServer from './lib/compilers/server';
 
 const cwd = process.cwd();
 export const aheadDir = path.join(cwd, '.ahead');
@@ -48,4 +49,6 @@ export const aheadDir = path.join(cwd, '.ahead');
 		path.join(aheadDir, 'build'),
 		path.join(__dirname, 'lib', 'client', 'template.html'),
 	);
+
+	await compileServer(path.join(aheadDir, 'build'));
 })();
