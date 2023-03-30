@@ -1,5 +1,7 @@
 # You don't need test stuff in an npm package
 testing/
+# ...nor the source directory
+src/
 # ignore all typescript files
 *.ts
 # ...but not the declaration files
