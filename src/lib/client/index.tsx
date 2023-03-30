@@ -1,6 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { hydrateRoot } from 'react-dom/client';
 import Router from './router';
 
-const root = createRoot(document.getElementById('root')!);
-root.render(<Router />);
+const root = hydrateRoot(document.getElementById('root')!, <Router />);
