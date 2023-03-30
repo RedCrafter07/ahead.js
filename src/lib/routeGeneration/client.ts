@@ -79,21 +79,27 @@ function transformToRoutes(indexed: IndexedRoute[]): Route[] {
 	return router;
 }
 
-export function transform(routes: IndexedRoute[]) {
+export function transform(routes: IndexedRoute[], client: boolean = true) {
 	let file = '';
 
 	const { data, imports } = transformImports(routes);
 	const router = transformToRoutes(data);
 
-	for (let i = 0; i < imports.length; ++i)
-		file += `const Import_${i} = React.lazy(() => import(${JSON.stringify(
-			`.${imports[i]
-				.split('.')
-				.slice(0, -1)
-				.join('.')
-				.replaceAll(path.sep, '/')
-				.slice(path.join(aheadDir, 'build', 'pre', 'client').length)}`,
-		)}));\n`;
+	for (let i = 0; i < imports.length; ++i) {
+		const importData = imports[i]
+			.split('.')
+			.slice(0, -1)
+			.join('.')
+			.replaceAll(path.sep, '/')
+			.slice(path.join(aheadDir, 'build', 'pre', 'client').length);
+
+		const jsonImport = JSON.stringify(
+			`.${!client ? './client' : ''}${importData}`,
+		);
+		if (client)
+			file += `const Import_${i} = React.lazy(() => import(${jsonImport}));\n`;
+		else file += `import Import_${i} from ${jsonImport};\n`;
+	}
 	file += '\n\nexport default ';
 	file += JSON.stringify(router, null, 2);
 
