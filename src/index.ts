@@ -16,10 +16,19 @@ export const aheadDir = path.join(cwd, '.ahead');
 	console.log('Initialized!');
 
 	const routes = await getRoutes(cwd);
+	const serverRoutes = await getRoutes(cwd);
 
 	await writeFile(
 		path.join(path.join(aheadDir, 'build', 'pre', 'client'), 'routes.tsx'),
 		`import React from "react";\n${transform(routes)}`,
+	);
+	await writeFile(
+		path.join(path.join(aheadDir, 'build', 'pre', 'server'), '.ssr.tsx'),
+		`import React from "react";\n${transform(serverRoutes, false)}`,
+	);
+	await copyFile(
+		path.join(__dirname, 'lib', 'server', 'ssrHandler.tsx'),
+		path.join(aheadDir, 'build', 'pre', 'server', 'ssrHandler.tsx'),
 	);
 	await copyFile(
 		path.join(__dirname, 'lib', 'client', 'router.tsx'),
@@ -31,7 +40,7 @@ export const aheadDir = path.join(cwd, '.ahead');
 	);
 
 	await writeFile(
-		path.join(aheadDir, 'build', 'pre', 'server', 'index.ts'),
+		path.join(aheadDir, 'build', 'pre', 'server', 'index.tsx'),
 		generateServerRoutes(routes),
 	);
 
