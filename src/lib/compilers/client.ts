@@ -74,14 +74,15 @@ export default async function compileClient(dir: string, htmlTemplate: string) {
 		},
 	});
 
-	await new Promise<void>((r) => {
-		compiler.run((err, res) => {
+	await new Promise((resolve, reject) => {
+		compiler.run((err, stats) => {
 			if (err) {
-				console.error(err);
-				process.exit(1);
+				reject(err);
+			} else if (stats?.hasErrors()) {
+				reject(stats.toString());
+			} else {
+				resolve(stats);
 			}
-			console.log(res?.compilation.errors);
-			r();
 		});
 	});
 }
