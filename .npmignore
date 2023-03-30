@@ -1,0 +1,6 @@
+# You don't need test stuff in an npm package
+testing/
+# ignore all typescript files
+*.ts
+# ...but not the declaration files
+!*.d.ts
