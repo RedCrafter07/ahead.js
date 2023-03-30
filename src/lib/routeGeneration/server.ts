@@ -5,8 +5,8 @@ export default function generateServerRoutes(routes: IndexedRoute[]) {
 	const serverRouter = routes
 		.map((r) => r.path)
 		.map((p) => {
-			return `app.get("${p}", (req, res) => {				
-	sendClient(req, res)
+			return `app.get("${p}", async (req, res) => {				
+	await sendClient(req, res)
 })`;
 		})
 		.join('\n\n');
@@ -20,8 +20,8 @@ const app = express();
 
 app.use("/.ahead", express.static('${clientDistDir.replaceAll('\\', '\\\\')}'))
 
-function sendClient(req: express.Request, res: express.Response) {
-	res.send(handleSSR(req.originalUrl));
+async function sendClient(req: express.Request, res: express.Response) {
+	res.send(await handleSSR(req));
 }
 
 ${serverRouter}
