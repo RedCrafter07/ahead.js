@@ -1,7 +1,6 @@
 import path from 'path';
 import { Configuration, webpack } from 'webpack';
 import AheadLoggingPlugin from './plugins/logging';
-import ServerStarterPlugin from './plugins/serverStarter';
 import PreServerPlugin from './plugins/pre/server';
 
 export default async function compileServer(
