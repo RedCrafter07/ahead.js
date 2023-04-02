@@ -30,10 +30,6 @@ class AheadLoggingPlugin {
 			this.logEvent('Watching for changes...');
 		});
 
-		compiler.hooks.invalid.tap('AheadLoggingPlugin', (o) => {
-			this.logEvent('Invalidated!', o ?? '');
-		});
-
 		compiler.hooks.failed.tap('AheadLoggingPlugin', (o) => {
 			this.logEvent('Failed!', o.message);
 		});
