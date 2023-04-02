@@ -15,8 +15,9 @@ export default {
 	],
 	async exec() {
 		const cwd = process.cwd();
+		const port = process.argv.slice(2)[1];
 
-		const devServer = new DevServer(path.join(cwd, 'pages'));
+		const devServer = new DevServer(path.join(cwd, 'pages'), port ?? '3000');
 		await devServer.start();
 
 		process.on('exit', () => {
