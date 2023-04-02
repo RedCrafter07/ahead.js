@@ -44,6 +44,8 @@ class PreClientPlugin {
 					path.join(root, 'lib', 'client', 'index.tsx.txt'),
 					path.join(aheadDir, 'build', 'pre', 'client', 'index.tsx'),
 				);
+
+				callback();
 			},
 		);
 	}
