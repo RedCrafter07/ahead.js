@@ -7,11 +7,13 @@ import { ChildProcess, spawn } from 'child_process';
 class DevServer {
 	dir: string;
 	watcher?: FSWatcher;
+	port: string;
 
 	serverProcess?: ChildProcess;
 
-	constructor(dir: string) {
+	constructor(dir: string, port: string) {
 		this.dir = path.resolve(dir);
+		this.port = port;
 	}
 
 	async start() {
@@ -62,16 +64,24 @@ class DevServer {
 	}
 
 	startProcess() {
-		this.serverProcess = spawn('node', [
-			path.join(
-				process.cwd(),
-				'.ahead',
-				'build',
-				'dist',
-				'server',
-				'server.js',
-			),
-		]);
+		this.serverProcess = spawn(
+			'node',
+			[
+				path.join(
+					process.cwd(),
+					'.ahead',
+					'build',
+					'dist',
+					'server',
+					'server.js',
+				),
+			],
+			{
+				env: {
+					AHEAD_PORT: this.port,
+				},
+			},
+		);
 
 		this.serverProcess.stdout?.on('data', (data) => {
 			console.log(chalk.hex('#009BFF').bold(`[server]`), data.toString());
