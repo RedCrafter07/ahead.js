@@ -5,7 +5,6 @@ export default {
 	name: 'help',
 	aliases: ['h'],
 	description: 'Shows this help message',
-	options: [],
 	async exec() {
 		console.log(chalk.hex('#009BFF').underline('Ahead.js Commands'));
 
