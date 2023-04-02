@@ -2,6 +2,7 @@ import path from 'path';
 import { Configuration, webpack } from 'webpack';
 import AheadLoggingPlugin from './plugins/logging';
 import PreServerPlugin from './plugins/pre/server';
+import { EsbuildPlugin } from 'esbuild-loader';
 
 export default async function compileServer(
 	dir: string,
@@ -37,7 +38,11 @@ export default async function compileServer(
 		},
 		plugins: [new PreServerPlugin(), new AheadLoggingPlugin('server')],
 		optimization: {
-			minimize: false,
+			minimizer: [
+				new EsbuildPlugin({
+					minify: true,
+				}),
+			],
 		},
 	});
 

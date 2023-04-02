@@ -3,6 +3,7 @@ import { webpack, Configuration } from 'webpack';
 import HTMLPlugin from 'html-webpack-plugin';
 import AheadLoggingPlugin from './plugins/logging';
 import PreClientPlugin from './plugins/pre/client';
+import { EsbuildPlugin } from 'esbuild-loader';
 
 export default async function compileClient(
 	dir: string,
@@ -23,7 +24,11 @@ export default async function compileClient(
 			splitChunks: {
 				chunks: 'all',
 			},
-			minimize: false,
+			minimizer: [
+				new EsbuildPlugin({
+					minify: true,
+				}),
+			],
 		},
 		resolve: {
 			extensions: [
