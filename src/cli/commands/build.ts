@@ -9,6 +9,6 @@ export default {
 	aliases: [],
 	description: 'Build the Ahead.js app',
 	async exec() {
-		await build();
+		await build('production');
 	},
 } as Command;
