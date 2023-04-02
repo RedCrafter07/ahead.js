@@ -1,5 +1,6 @@
 import path from 'path';
 import { webpack } from 'webpack';
+import AheadLoggingPlugin from './plugins/logging';
 
 export default async function compileServer(dir: string) {
 	dir = path.resolve(dir);
@@ -30,6 +31,7 @@ export default async function compileServer(dir: string) {
 				},
 			],
 		},
+		plugins: [new AheadLoggingPlugin('server')],
 	});
 
 	await new Promise((resolve, reject) => {

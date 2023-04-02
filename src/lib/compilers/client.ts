@@ -1,6 +1,7 @@
 import path from 'path';
 import { webpack } from 'webpack';
 import HTMLPlugin from 'html-webpack-plugin';
+import AheadLoggingPlugin from './plugins/logging';
 
 export default async function compileClient(dir: string, htmlTemplate: string) {
 	const compiler = webpack({
@@ -38,6 +39,7 @@ export default async function compileClient(dir: string, htmlTemplate: string) {
 			new HTMLPlugin({
 				template: htmlTemplate,
 			}),
+			new AheadLoggingPlugin('client'),
 		],
 		module: {
 			rules: [
