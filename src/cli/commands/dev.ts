@@ -1,6 +1,8 @@
+import build from '../../build';
+
 export default {
 	name: 'dev',
-	aliases: [],
+	aliases: ['d'],
 	description: 'Start the Ahead.js Dev Server',
 	syntax: '[PORT]',
 	options: [
@@ -10,5 +12,7 @@ export default {
 			default: '3000',
 		},
 	],
-	async exec() {},
+	async exec() {
+		await build('development');
+	},
 } as Command;
