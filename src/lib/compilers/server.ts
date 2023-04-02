@@ -10,43 +10,47 @@ export default async function compileServer(
 ) {
 	dir = path.resolve(dir);
 
-	const compiler = webpack(
-		{
-			mode,
-			entry: {
-				server: path.join(dir, 'pre', 'server', 'index.tsx'),
-			},
-			output: {
-				path: `${dir}/dist/server`,
-				filename: '[name].js',
-			},
-			target: 'node',
-			resolve: {
-				extensions: ['.ts', '.tsx', '.js', '.jsx'],
-			},
-			module: {
-				rules: [
-					{
-						test: /\.tsx?$/,
-						loader: 'esbuild-loader',
-						options: {
-							loader: 'tsx',
-							target: 'esnext',
-						},
-						exclude: /node_modules/,
-					},
-				],
-			},
-			plugins: [
-				new PreServerPlugin(),
-				new AheadLoggingPlugin('server'),
-				new ServerStarterPlugin(),
-			],
-			optimization: {
-				minimize: false,
-			},
-			watch: mode === 'development',
+	const compiler = webpack({
+		mode,
+		entry: {
+			server: path.join(dir, 'pre', 'server', 'index.tsx'),
 		},
-		(err, stats) => {},
-	);
+		output: {
+			path: `${dir}/dist/server`,
+			filename: '[name].js',
+		},
+		target: 'node',
+		resolve: {
+			extensions: ['.ts', '.tsx', '.js', '.jsx'],
+		},
+		module: {
+			rules: [
+				{
+					test: /\.tsx?$/,
+					loader: 'esbuild-loader',
+					options: {
+						loader: 'tsx',
+						target: 'esnext',
+					},
+					exclude: /node_modules/,
+				},
+			],
+		},
+		plugins: [new PreServerPlugin(), new AheadLoggingPlugin('server')],
+		optimization: {
+			minimize: false,
+		},
+	});
+
+	return new Promise((resolve, reject) => {
+		compiler.run((err, stats) => {
+			if (err) {
+				reject(err);
+			} else if (stats?.hasErrors()) {
+				reject(stats.toString());
+			} else {
+				resolve(stats);
+			}
+		});
+	});
 }
