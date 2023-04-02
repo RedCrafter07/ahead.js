@@ -18,7 +18,9 @@ class AheadLoggingPlugin {
 	async apply(compiler: Compiler) {
 		compiler.hooks.done.tap('AheadLoggingPlugin', (stats) => {
 			this.logEvent(
-				`Compilation finished in ${stats.endTime - stats.startTime}ms`,
+				chalk.green(
+					`Compilation finished in ${stats.endTime - stats.startTime}ms`,
+				),
 			);
 		});
 
