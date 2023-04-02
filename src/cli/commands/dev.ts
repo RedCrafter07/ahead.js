@@ -1,4 +1,5 @@
-import build from '../../build';
+import path from 'path';
+import DevServer from '../../devServer';
 
 export default {
 	name: 'dev',
@@ -13,6 +14,13 @@ export default {
 		},
 	],
 	async exec() {
-		await build('development');
+		const cwd = process.cwd();
+
+		const devServer = new DevServer(path.join(cwd, 'pages'));
+		await devServer.start();
+
+		process.on('exit', () => {
+			devServer.stop();
+		});
 	},
 } as Command;
