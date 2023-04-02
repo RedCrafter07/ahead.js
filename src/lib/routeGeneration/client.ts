@@ -1,5 +1,5 @@
 import path from 'path';
-import { aheadDir } from '../..';
+import { aheadDir } from '../../build';
 
 interface Route {
 	path: string;

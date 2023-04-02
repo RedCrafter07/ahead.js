@@ -1,5 +1,5 @@
 import path from 'path';
-import { aheadDir } from '../..';
+import { aheadDir } from '../../build';
 import type { IndexedRoute } from './client';
 export default function generateServerRoutes(routes: IndexedRoute[]) {
 	const serverRouter = routes
