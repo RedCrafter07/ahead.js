@@ -57,7 +57,8 @@ export default async function build(mode: 'dev' | 'prod' = 'prod') {
 		generateServerRoutes(routes),
 	);
 
-	if (mode == 'prod') console.log(chalk.cyan('Compiling client & server...'));
+	if (mode == 'prod')
+		console.log(chalk.hex('#6D48E8')('Compiling client & server...'));
 
 	await compileClient(
 		path.join(aheadDir, 'build'),
