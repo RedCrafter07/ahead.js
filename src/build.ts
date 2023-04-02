@@ -6,29 +6,36 @@ import getRoutes from './lib/routeGeneration/getRoutes';
 import generateServerRoutes from './lib/routeGeneration/server';
 import compileServer from './lib/compilers/server';
 import chalk from 'chalk';
+import { checkDirs } from './lib/init';
 
 const cwd = process.cwd();
 export const aheadDir = path.join(cwd, '.ahead');
 
 export default async function build(mode: 'dev' | 'prod' = 'prod') {
+	console.log(chalk.hex('#0099ff')('Checking directories...'));
+
+	await checkDirs(cwd);
+
+	console.log(chalk.hex('#0099ff')('Starting build...'));
+
 	const routes = await getRoutes(cwd);
 	const serverRoutes = await getRoutes(cwd);
 
 	if (mode == 'prod')
-		console.log(chalk.yellowBright('Generating client router...'));
+		console.log(chalk.hex('#4F58FF')('Generating client router...'));
 
 	await writeFile(
 		path.join(path.join(aheadDir, 'build', 'pre', 'client'), 'routes.tsx'),
 		`import React from "react";\n${transform(routes)}`,
 	);
 	if (mode == 'prod')
-		console.log(chalk.yellowBright('Generating server router...'));
+		console.log(chalk.hex('#4F58FF')('Generating server router...'));
 	await writeFile(
 		path.join(path.join(aheadDir, 'build', 'pre', 'server'), '.ssr.tsx'),
 		`import React from "react";\n${transform(serverRoutes, false)}`,
 	);
 	if (mode == 'prod')
-		console.log(chalk.yellowBright('Writing Ahead.js files...'));
+		console.log(chalk.hex('#4F58FF')('Writing Ahead.js files...'));
 	await copyFile(
 		path.join(__dirname, 'lib', 'server', 'ssrHandler.tsx.txt'),
 		path.join(aheadDir, 'build', 'pre', 'server', 'ssrHandler.tsx'),
@@ -43,7 +50,7 @@ export default async function build(mode: 'dev' | 'prod' = 'prod') {
 	);
 
 	if (mode == 'prod')
-		console.log(chalk.grey('Generating routes for the server...'));
+		console.log(chalk.hex('#AF5CFE')('Generating routes for the server...'));
 
 	await writeFile(
 		path.join(aheadDir, 'build', 'pre', 'server', 'index.tsx'),
@@ -58,4 +65,6 @@ export default async function build(mode: 'dev' | 'prod' = 'prod') {
 	);
 
 	await compileServer(path.join(aheadDir, 'build'));
+
+	console.log(chalk.greenBright('Build finished! 🎆'));
 }
