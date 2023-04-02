@@ -14,6 +14,7 @@ const cwd = process.cwd();
 export const aheadDir = path.join(cwd, '.ahead');
 
 export default async function build(mode: Configuration['mode']) {
+	const startPoint = Date.now();
 	console.log(chalk.hex('#0099ff')('Checking directories...'));
 
 	await checkDirs(cwd);
@@ -31,5 +32,7 @@ export default async function build(mode: Configuration['mode']) {
 		mode,
 	);
 
-	console.log(chalk.greenBright('Build finished! 🎆'));
+	console.log(
+		chalk.greenBright(`Build finished in ${Date.now() - startPoint}ms.`),
+	);
 }
