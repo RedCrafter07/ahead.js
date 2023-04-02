@@ -20,19 +20,16 @@ export default async function build(mode: Configuration['mode']) {
 
 	console.log(chalk.hex('#0099ff')('Starting build...'));
 
-	const routes = await getRoutes(cwd);
-	const serverRoutes = await getRoutes(cwd);
-
 	if (mode == 'production')
 		console.log(chalk.hex('#6D48E8')('Compiling client & server...'));
+
+	await compileServer(path.join(aheadDir, 'build'), mode);
 
 	await compileClient(
 		path.join(aheadDir, 'build'),
 		path.join(root, 'lib', 'client', 'template.html'),
 		mode,
 	);
-
-	await compileServer(path.join(aheadDir, 'build'), mode);
 
 	console.log(chalk.greenBright('Build finished! 🎆'));
 }
