@@ -7,21 +7,35 @@ class AheadLoggingPlugin {
 	constructor(type: 'client' | 'server') {
 		this.type = type;
 	}
-	logEvent(event: string) {
+	logEvent(...events: string[]) {
 		console.log(
-			this.type == 'client'
-				? chalk.blue(`[${this.type}]`)
-				: chalk.green(`[${this.type}]`),
-			event,
+			chalk
+				.hex(this.type == 'client' ? '#0CCAE8' : '#009BFF')
+				.bold(`[${this.type}]`),
+			...events,
 		);
 	}
 	async apply(compiler: Compiler) {
 		compiler.hooks.done.tap('AheadLoggingPlugin', (stats) => {
-			this.logEvent('Done!');
+			this.logEvent(
+				`Compilation finished in ${stats.endTime - stats.startTime}ms`,
+			);
 		});
 
-		compiler.hooks.beforeCompile.tap('AheadLoggingPlugin', () => {
+		compiler.hooks.run.tap('AheadLoggingPlugin', () => {
 			this.logEvent('Compilation starts...');
+		});
+
+		compiler.hooks.watchRun.tap('AheadLoggingPlugin', () => {
+			this.logEvent('Watching for changes...');
+		});
+
+		compiler.hooks.invalid.tap('AheadLoggingPlugin', (o) => {
+			this.logEvent('Invalidated!', o ?? '');
+		});
+
+		compiler.hooks.failed.tap('AheadLoggingPlugin', (o) => {
+			this.logEvent('Failed!', o.message);
 		});
 	}
 }
