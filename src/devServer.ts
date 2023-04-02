@@ -2,10 +2,13 @@ import chalk from 'chalk';
 import { FSWatcher, watch } from 'fs';
 import path from 'path';
 import { buildServer } from './build';
+import { ChildProcess, spawn } from 'child_process';
 
 class DevServer {
 	dir: string;
 	watcher?: FSWatcher;
+
+	serverProcess?: ChildProcess;
 
 	constructor(dir: string) {
 		this.dir = path.resolve(dir);
@@ -28,6 +31,8 @@ class DevServer {
 
 		this.watcher = watch(this.dir, { recursive: true });
 
+		this.startProcess();
+
 		this.registerEvents();
 	}
 
@@ -43,12 +48,39 @@ class DevServer {
 	}
 
 	async handleChange() {
+		console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Stopping server...');
+		this.serverProcess?.kill();
+
+		console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Rebuilding...');
 		await buildServer('development');
+
+		console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Starting server...');
+
+		this.startProcess();
 
 		this.registerEvents();
 	}
 
+	startProcess() {
+		this.serverProcess = spawn('node', [
+			path.join(
+				process.cwd(),
+				'.ahead',
+				'build',
+				'dist',
+				'server',
+				'server.js',
+			),
+		]);
+
+		this.serverProcess.stdout?.on('data', (data) => {
+			console.log(chalk.hex('#009BFF').bold(`[server]`), data.toString());
+		});
+	}
+
 	async stop() {
+		console.log('Closing dev server...');
+		this.serverProcess?.kill();
 		this.watcher?.close();
 	}
 }
