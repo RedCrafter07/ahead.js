@@ -24,15 +24,19 @@ export default async function build(mode: Configuration['mode']) {
 	if (mode == 'production')
 		console.log(chalk.hex('#6D48E8')('Compiling client & server...'));
 
+	await buildServer(mode);
+
+	console.log(
+		chalk.greenBright(`Build finished in ${Date.now() - startPoint}ms.`),
+	);
+}
+
+export async function buildServer(mode: Configuration['mode']) {
 	await compileServer(path.join(aheadDir, 'build'), mode);
 
 	await compileClient(
 		path.join(aheadDir, 'build'),
 		path.join(root, 'lib', 'client', 'template.html'),
 		mode,
-	);
-
-	console.log(
-		chalk.greenBright(`Build finished in ${Date.now() - startPoint}ms.`),
 	);
 }
