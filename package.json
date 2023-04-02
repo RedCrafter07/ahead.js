@@ -4,7 +4,7 @@
 	"description": "Another React Framework",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "cd src && tsc && cd .."
+		"build": "cd src && tsc && tsx afterBuild.ts && cd .."
 	},
 	"bin": {
 		"ahead": "./dist/cli/index.js"
