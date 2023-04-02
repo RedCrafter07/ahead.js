@@ -16,11 +16,10 @@ class PreClientPlugin {
 				const mode = compiler.options.mode;
 				const routes = await getRoutes(cwd);
 
-				if (mode == 'production')
-					console.log(
-						chalk.hex('#0CCAE8').bold(`[client]`),
-						chalk.hex('#4F58FF')('Generating client router...'),
-					);
+				console.log(
+					chalk.hex('#0CCAE8').bold(`[client]`),
+					chalk.hex('#4F58FF')('Generating client router...'),
+				);
 
 				await writeFile(
 					path.join(
@@ -30,11 +29,10 @@ class PreClientPlugin {
 					`import React from "react";\n${transform(routes)}`,
 				);
 
-				if (mode == 'production')
-					console.log(
-						chalk.hex('#0CCAE8').bold(`[client]`),
-						chalk.hex('#4F58FF')('Writing Ahead.js files...'),
-					);
+				console.log(
+					chalk.hex('#0CCAE8').bold(`[client]`),
+					chalk.hex('#4F58FF')('Writing Ahead.js files...'),
+				);
 
 				await copyFile(
 					path.join(root, 'lib', 'client', 'router.tsx.txt'),

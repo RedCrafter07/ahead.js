@@ -17,22 +17,20 @@ class PreServerPlugin {
 				const mode = compiler.options.mode;
 				const routes = await getRoutes(cwd);
 
-				if (mode == 'production')
-					console.log(
-						chalk.hex('#009BFF').bold(`[server]`),
-						chalk.hex('#4F58FF')('Generating server router...'),
-					);
+				console.log(
+					chalk.hex('#009BFF').bold(`[server]`),
+					chalk.hex('#4F58FF')('Generating server router...'),
+				);
 
 				await writeFile(
 					path.join(path.join(aheadDir, 'build', 'pre', 'server'), '.ssr.tsx'),
 					`import React from "react";\n${transform(routes, false)}`,
 				);
 
-				if (mode == 'production')
-					console.log(
-						chalk.hex('#009BFF').bold(`[server]`),
-						chalk.hex('#4F58FF')('Writing Ahead.js files...'),
-					);
+				console.log(
+					chalk.hex('#009BFF').bold(`[server]`),
+					chalk.hex('#4F58FF')('Writing Ahead.js files...'),
+				);
 
 				await copyFile(
 					path.join(root, 'lib', 'server', 'ssrHandler.tsx.txt'),
@@ -44,11 +42,10 @@ class PreServerPlugin {
 					generateServerRoutes(routes),
 				);
 
-				if (mode == 'production')
-					console.log(
-						chalk.hex('#009BFF').bold(`[server]`),
-						chalk.hex('#AF5CFE')('Generating routes for the server...'),
-					);
+				console.log(
+					chalk.hex('#009BFF').bold(`[server]`),
+					chalk.hex('#AF5CFE')('Generating routes for the server...'),
+				);
 
 				await writeFile(
 					path.join(aheadDir, 'build', 'pre', 'server', 'index.tsx'),
