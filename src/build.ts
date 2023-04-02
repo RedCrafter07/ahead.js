@@ -2,7 +2,6 @@ import { copyFile, writeFile } from 'fs/promises';
 import path from 'path';
 import compileClient from './lib/compilers/client';
 import { transform } from './lib/routeGeneration/client';
-import init from './lib/init';
 import getRoutes from './lib/routeGeneration/getRoutes';
 import generateServerRoutes from './lib/routeGeneration/server';
 import compileServer from './lib/compilers/server';
