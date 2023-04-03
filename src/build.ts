@@ -28,6 +28,7 @@ export default async function build(mode: Configuration['mode']) {
 }
 
 export async function buildAll(mode: Configuration['mode']) {
+	const startTime = Date.now();
 	if (mode == 'production') {
 		await compileServer(path.join(aheadDir, 'build'), mode);
 		await compileClient(
@@ -45,4 +46,6 @@ export async function buildAll(mode: Configuration['mode']) {
 			mode,
 		),
 	]);
+
+	return Date.now() - startTime;
 }
