@@ -20,19 +20,29 @@ export default async function build(mode: Configuration['mode']) {
 	if (mode == 'production')
 		console.log(chalk.hex('#6D48E8')('Compiling client & server...'));
 
-	await buildServer(mode);
+	await buildAll(mode);
 
 	console.log(
 		chalk.greenBright(`Build finished in ${Date.now() - startPoint}ms.`),
 	);
 }
 
-export async function buildServer(mode: Configuration['mode']) {
-	await compileServer(path.join(aheadDir, 'build'), mode);
-
-	await compileClient(
-		path.join(aheadDir, 'build'),
-		path.join(root, 'lib', 'client', 'template.html'),
-		mode,
-	);
+export async function buildAll(mode: Configuration['mode']) {
+	if (mode == 'production') {
+		await compileServer(path.join(aheadDir, 'build'), mode);
+		await compileClient(
+			path.join(aheadDir, 'build'),
+			path.join(root, 'lib', 'client', 'template.html'),
+			mode,
+		);
+		return;
+	}
+	await Promise.all([
+		compileServer(path.join(aheadDir, 'build'), mode),
+		compileClient(
+			path.join(aheadDir, 'build'),
+			path.join(root, 'lib', 'client', 'template.html'),
+			mode,
+		),
+	]);
 }
