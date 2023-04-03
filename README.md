@@ -20,4 +20,4 @@ Personally, I loved the concept of Next.js. I really like how they've put such a
 
 ## Why Ahead.js?
 
-Ahead.js brings the best of both worlds. It uses React.js for rendering, React Router for routing on client and ssr and Express.js as the router.
+Ahead.js brings the best of both worlds. It uses React.js for rendering, React Router for routing on client and for SSR and Express.js as the router.
