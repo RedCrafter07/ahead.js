@@ -54,7 +54,12 @@ class DevServer {
 		this.serverProcess?.kill();
 
 		console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Rebuilding...');
-		await buildAll('development');
+		const buildTime = await buildAll('development');
+
+		console.log(
+			chalk.hex('#0099ff').bold('[ahead]'),
+			`Rebuilt in ${buildTime}ms`,
+		);
 
 		console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Starting server...');
 
