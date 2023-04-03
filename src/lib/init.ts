@@ -31,6 +31,16 @@ export default async function init(cwd: string) {
 			path.join(cwd, 'src', 'pages'),
 			path.join(cwd, '.ahead', 'build', 'pre', 'client', 'routes'),
 		);
+
+	if (
+		!(await existsSync(
+			path.join(cwd, '.ahead', 'build', 'pre', 'server', 'routes'),
+		))
+	)
+		await createSymlink(
+			path.join(cwd, 'src', 'server'),
+			path.join(cwd, '.ahead', 'build', 'pre', 'server', 'routes'),
+		);
 }
 
 async function createSymlink(source: string, target: string) {
