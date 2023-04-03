@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { FSWatcher, watch } from 'fs';
 import path from 'path';
-import { buildServer } from './build';
+import { buildAll } from './build';
 import { ChildProcess, spawn } from 'child_process';
 
 class DevServer {
@@ -24,7 +24,7 @@ class DevServer {
 			'Running initial build...',
 		);
 
-		await buildServer('development');
+		await buildAll('development');
 
 		console.log(
 			chalk.hex('#0099ff').bold('[ahead]'),
@@ -39,7 +39,7 @@ class DevServer {
 	}
 
 	registerEvents() {
-		this.watcher?.once('change', async (eventType, fileName) => {
+		this.watcher?.once('change', async (eventType) => {
 			console.log(
 				chalk.hex('#0099ff').bold('[ahead]'),
 				chalk.hex('#0E7AF3')('File changed! Rebuilding...'),
@@ -54,7 +54,7 @@ class DevServer {
 		this.serverProcess?.kill();
 
 		console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Rebuilding...');
-		await buildServer('development');
+		await buildAll('development');
 
 		console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Starting server...');
 
