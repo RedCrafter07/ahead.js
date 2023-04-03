@@ -38,11 +38,6 @@ class PreServerPlugin {
 					path.join(aheadDir, 'build', 'pre', 'server', 'ssrHandler.tsx'),
 				);
 
-				await writeFile(
-					path.join(aheadDir, 'build', 'pre', 'server', 'index.tsx'),
-					await generateServerRoutes(routes),
-				);
-
 				console.log(
 					chalk.hex('#009BFF').bold(`[server]`),
 					chalk.hex('#AF5CFE')('Generating routes for the server...'),
