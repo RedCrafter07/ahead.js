@@ -18,7 +18,7 @@ export default {
 		const port = process.argv.slice(2)[1];
 
 		const devServer = new DevServer(
-			path.join(cwd, 'pages'),
+			path.join(cwd, 'src'),
 			port && port.length > 0 ? port : '3000',
 		);
 		await devServer.start();
