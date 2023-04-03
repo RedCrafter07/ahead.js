@@ -9,7 +9,8 @@ const neededDirs = [
 	['.ahead', 'config'],
 	['.ahead', 'build', 'pre', 'client'],
 	['.ahead', 'build', 'pre', 'server'],
-	['pages'],
+	['src', 'pages'],
+	['src', 'server'],
 ];
 
 export default async function init(cwd: string) {
@@ -27,7 +28,7 @@ export default async function init(cwd: string) {
 		))
 	)
 		await createSymlink(
-			path.join(cwd, 'pages'),
+			path.join(cwd, 'src', 'pages'),
 			path.join(cwd, '.ahead', 'build', 'pre', 'client', 'routes'),
 		);
 }
