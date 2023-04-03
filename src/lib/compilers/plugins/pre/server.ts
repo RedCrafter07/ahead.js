@@ -6,6 +6,7 @@ import { transform } from '../../../routeGeneration/client';
 import { aheadDir, root } from '../../../../paths';
 import generateServerRoutes from '../../../routeGeneration/server';
 import chalk from 'chalk';
+import generateApiRoutes from '../../../routeGeneration/apiRoutes';
 
 const cwd = process.cwd();
 
@@ -39,7 +40,7 @@ class PreServerPlugin {
 
 				await writeFile(
 					path.join(aheadDir, 'build', 'pre', 'server', 'index.tsx'),
-					generateServerRoutes(routes),
+					await generateServerRoutes(routes),
 				);
 
 				console.log(
@@ -49,7 +50,7 @@ class PreServerPlugin {
 
 				await writeFile(
 					path.join(aheadDir, 'build', 'pre', 'server', 'index.tsx'),
-					generateServerRoutes(routes),
+					await generateServerRoutes(routes),
 				);
 
 				callback();
