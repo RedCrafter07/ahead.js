@@ -6,7 +6,7 @@ export const aheadDir = path.join(cwd, '.ahead');
 
 export default {
 	name: 'build',
-	aliases: [],
+	aliases: ['b'],
 	description: 'Build the Ahead.js app',
 	async exec() {
 		await build('production');
