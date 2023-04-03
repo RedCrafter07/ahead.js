@@ -1,7 +1,10 @@
 import path from 'path';
 import { aheadDir } from '../../build';
 import type { IndexedRoute } from './client';
-export default function generateServerRoutes(routes: IndexedRoute[]) {
+import generateApiRoutes from './apiRoutes';
+export default async function generateServerRoutes(routes: IndexedRoute[]) {
+	const apiRoutes = await generateApiRoutes();
+
 	const serverRouter = routes
 		.map((r) => r.path)
 		.map((p) => {
@@ -15,8 +18,12 @@ export default function generateServerRoutes(routes: IndexedRoute[]) {
 
 	return `import express from 'express';
 import handleSSR from './ssrHandler';
+${apiRoutes.imports}
 
 const app = express();
+const port = process.env.AHEAD_PORT ? process.env.AHEAD_PORT : 3000;
+
+${apiRoutes.express}
 
 app.use("/.ahead", express.static('${clientDistDir.replaceAll('\\', '\\\\')}'))
 
@@ -26,6 +33,6 @@ async function sendClient(req: express.Request, res: express.Response) {
 
 ${serverRouter}
 
-app.listen(process.env.AHEAD_PORT ?? 3000, () => {console.log("Listening on port " + process.env.AHEAD_PORT)})
+app.listen(port, () => {console.log("Listening on port " + port)})
 `;
 }
