@@ -1,7 +1,7 @@
 import { existsSync } from 'fs';
 import { symlink } from 'fs/promises';
 import path from 'path';
-import initDirs, { initDir } from './util/initDirs';
+import { initDir } from './util/initDirs';
 import chalk from 'chalk';
 
 const neededDirs = [
