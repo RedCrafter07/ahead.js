@@ -11,11 +11,11 @@ export const aheadDir = path.join(cwd, '.ahead');
 
 export default async function build(mode: Configuration['mode']) {
 	const startPoint = Date.now();
-	console.log(chalk.hex('#0099ff')('Checking directories...'));
+	console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Checking directories...');
 
 	await checkDirs(cwd);
 
-	console.log(chalk.hex('#0099ff')('Starting build...'));
+	console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Starting build...');
 
 	if (mode == 'production')
 		console.log(chalk.hex('#6D48E8')('Compiling client & server...'));
