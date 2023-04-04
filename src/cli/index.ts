@@ -8,7 +8,10 @@ export const commands: { [key: string]: Command } = {};
 		withFileTypes: true,
 	});
 	const commandFiles = commandDirFiles.filter(
-		(f) => f.isFile() && (f.name.endsWith('.js') || f.name.endsWith('.ts')),
+		(f) =>
+			f.isFile() &&
+			(f.name.endsWith('.js') ||
+				(f.name.endsWith('.ts') && !f.name.endsWith('.d.ts'))),
 	);
 
 	for (const file of commandFiles) {
