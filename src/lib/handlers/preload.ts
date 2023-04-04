@@ -50,5 +50,7 @@ export default async function generatePreload() {
 	const imports = await genImports(files);
 	const preload = await genPreload(files);
 
-	return { imports, preload };
+	return `${imports}
+	
+	${preload}`;
 }
