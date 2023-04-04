@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router } from 'ahead.js/server';
 
 const router = Router();
 
@@ -7,4 +7,3 @@ router.get('/', (req, res) => {
 });
 
 export default router;
-export const path = '/api';
