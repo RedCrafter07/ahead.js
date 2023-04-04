@@ -6,7 +6,6 @@ import { transform } from '../../../routeGeneration/client';
 import { aheadDir, root } from '../../../../paths';
 import generateServerRoutes from '../../../routeGeneration/server';
 import chalk from 'chalk';
-import generateApiRoutes from '../../../routeGeneration/apiRoutes';
 import generatePreload from '../../../handlers/preload';
 
 const cwd = process.cwd();
