@@ -25,7 +25,7 @@ async function genRoutes(files: string[]) {
 		const fileName = path.basename(f, '.ts');
 
 		return {
-			path: `/${fileName.replaceAll(/[^a-zA-Z]/g, '-')}`,
+			path: `/${fileName.replaceAll(/[^\w\d]/g, '-')}`,
 			file: fileName,
 		};
 	});
