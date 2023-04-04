@@ -22,25 +22,24 @@ export default async function init(cwd: string) {
 			}),
 	);
 
-	if (
-		!(await existsSync(
-			path.join(cwd, '.ahead', 'build', 'pre', 'client', 'routes'),
-		))
-	)
-		await createSymlink(
-			path.join(cwd, 'src', 'pages'),
-			path.join(cwd, '.ahead', 'build', 'pre', 'client', 'routes'),
-		);
+	await createSafeSymlink(
+		path.join(cwd, 'src', 'pages'),
+		path.join(cwd, '.ahead', 'build', 'pre', 'client', 'routes'),
+	);
 
-	if (
-		!(await existsSync(
-			path.join(cwd, '.ahead', 'build', 'pre', 'server', 'routes'),
-		))
-	)
-		await createSymlink(
-			path.join(cwd, 'src', 'server'),
-			path.join(cwd, '.ahead', 'build', 'pre', 'server', 'routes'),
-		);
+	await createSafeSymlink(
+		path.join(cwd, 'src', 'server'),
+		path.join(cwd, '.ahead', 'build', 'pre', 'server', 'routes'),
+	);
+
+	await createSafeSymlink(
+		path.join(cwd, 'src', 'preload'),
+		path.join(cwd, '.ahead', 'build', 'pre', 'server', 'preload'),
+	);
+}
+
+async function createSafeSymlink(source: string, target: string) {
+	if (!(await existsSync(target))) await createSymlink(source, target);
 }
 
 async function createSymlink(source: string, target: string) {
