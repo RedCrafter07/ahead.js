@@ -21,11 +21,11 @@ export const commands: { [key: string]: Command } = {};
 
 	const cmd = process.argv.slice(2)[0];
 
+	if (!cmd) return await commands.help.exec();
+
 	const run = Object.values(commands).find(
 		(c) => c.name === cmd || c.aliases.includes(cmd),
 	);
-
-	if (!cmd) return await commands.help.exec();
 
 	if (!run) {
 		console.log(
