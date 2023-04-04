@@ -2,12 +2,12 @@
 	"name": "ahead.js",
 	"version": "1.0.1",
 	"description": "Another React Framework",
-	"main": "dist/index.js",
+	"main": "./index.js",
 	"scripts": {
 		"build": "cd src && tsc && tsx afterBuild.ts && cd .."
 	},
 	"bin": {
-		"ahead": "dist/cli/index.js"
+		"ahead": "cli/index.js"
 	},
 	"keywords": [],
 	"author": "",
