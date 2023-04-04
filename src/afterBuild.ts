@@ -40,4 +40,5 @@ import path from 'path';
 	}
 
 	await copyFiles(__dirname);
+	await copyFile('../package.json', '../dist/package.json');
 })();
