@@ -7,6 +7,7 @@ import { aheadDir, root } from '../../../../paths';
 import generateServerRoutes from '../../../routeGeneration/server';
 import chalk from 'chalk';
 import generateApiRoutes from '../../../routeGeneration/apiRoutes';
+import generatePreload from '../../../handlers/preload';
 
 const cwd = process.cwd();
 
@@ -30,12 +31,22 @@ class PreServerPlugin {
 
 				console.log(
 					chalk.hex('#009BFF').bold(`[server]`),
-					chalk.hex('#4F58FF')('Writing Ahead.js files...'),
+					chalk.hex('#4F58FF')('Writing SSR handler...'),
 				);
 
 				await copyFile(
 					path.join(root, 'lib', 'server', 'ssrHandler.tsx.txt'),
 					path.join(aheadDir, 'build', 'pre', 'server', 'ssrHandler.tsx'),
+				);
+
+				console.log(
+					chalk.hex('#009BFF').bold(`[server]`),
+					chalk.hex('#9050EB')('Generating preload...'),
+				);
+
+				await writeFile(
+					path.join(aheadDir, 'build', 'pre', 'server', 'preload.ts'),
+					await generatePreload(),
 				);
 
 				console.log(
