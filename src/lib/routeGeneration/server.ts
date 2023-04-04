@@ -18,21 +18,26 @@ export default async function generateServerRoutes(routes: IndexedRoute[]) {
 
 	return `import express from 'express';
 import handleSSR from './ssrHandler';
+import preload from "./preload";
+
+// Client route imports
 ${apiRoutes.imports}
 
-const app = express();
-const port = process.env.AHEAD_PORT ? process.env.AHEAD_PORT : 3000;
+(async () => {
+	const app = await preload(express());
+	const port = process.env.AHEAD_PORT ? process.env.AHEAD_PORT : 3000;
 
-${apiRoutes.express}
+	${apiRoutes.express}
 
-app.use("/.ahead", express.static('${clientDistDir.replaceAll('\\', '\\\\')}'))
+	app.use("/.ahead", express.static('${clientDistDir.replaceAll('\\', '\\\\')}'))
 
-async function sendClient(req: express.Request, res: express.Response) {
-	res.send(await handleSSR(req));
-}
+	async function sendClient(req: express.Request, res: express.Response) {
+		res.send(await handleSSR(req));
+	}
 
-${serverRouter}
+	${serverRouter}
 
-app.listen(port, () => {console.log("Listening on port " + port)})
+	app.listen(port, () => {console.log("Listening on port " + port)})
+})()
 `;
 }
