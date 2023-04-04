@@ -21,56 +21,16 @@ async function scanDir(directory: string) {
 }
 
 async function genRoutes(files: string[]) {
-	const relativePaths = files.map((f) => {
-		const rel = path.relative(
-			path.join(__dirname),
-			path.join(process.cwd(), '.ahead', 'build', 'pre', 'server', 'routes'),
-		);
+	const routes = files.map((f) => {
+		const fileName = path.basename(f, '.ts');
 
-		return `./${rel.replaceAll(path.sep, '/')}/${path.basename(f, '.ts')}`;
+		return {
+			path: `/${fileName.replaceAll(/[^a-zA-Z]/g, '-')}`,
+			file: fileName,
+		};
 	});
 
-	interface RouteExport {
-		default: Router;
-		path: string;
-		filePath: string;
-	}
-
-	const imports = (
-		await Promise.all(
-			relativePaths.map(async (p) => {
-				try {
-					return {
-						...(await import(p)),
-						filePath: p,
-					};
-				} catch {
-					return null;
-				}
-			}),
-		)
-	).filter((i) => i != null) as any[];
-
-	// filter out any files that don't match the type RouteExport
-	const routes = imports.filter(
-		(i) => i.default && typeof i.path == 'string',
-	) as RouteExport[];
-
-	if (routes.length < imports.length || imports.length != files.length) {
-		console.log(
-			chalk.yellow.bold('[ahead]'),
-			'Warning: Some files in the server directory are not valid route files. They will be ignored.',
-		);
-		console.log(
-			chalk.hex('#ff9900').bold('[ahead]'),
-			"You should export an express router by default as well as a variable named 'path' which provides the path to the router, e.g. /api",
-		);
-	}
-
-	return routes.map((r) => ({
-		path: r.path,
-		file: `${path.resolve(r.filePath)}.ts`,
-	}));
+	return routes;
 }
 
 async function genImports(files: string[]) {
