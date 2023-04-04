@@ -26,6 +26,6 @@ Ahead.js brings the best of both worlds. It uses React.js for rendering, React R
 
 - Special thanks to FishingHacks for helping me with the project and giving me some ideas.
 - Client and Server
-  - The router found in ahead.js/server is from express. It's exported from there for convenience.
-  - The stuff from ahead.js/client is from react-router-dom. It's exported from there for convenience as well.
+  - The router found in ahead.js/server is from [express](https://github.com/expressjs/express). It's exported from there for convenience.
+  - The stuff from ahead.js/client is from [react-router-dom](https://github.com/remix-run/react-router). It's exported from there for convenience as well.
   - Full credit to these libraries and their authors.
