@@ -11,6 +11,7 @@ const neededDirs = [
 	['.ahead', 'build', 'pre', 'server'],
 	['src', 'pages'],
 	['src', 'server'],
+	['src', 'preload'],
 ];
 
 export default async function init(cwd: string) {
