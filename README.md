@@ -21,3 +21,11 @@ Personally, I loved the concept of Next.js. I really like how they've put such a
 ## Why Ahead.js?
 
 Ahead.js brings the best of both worlds. It uses React.js for rendering, React Router for routing on client and for SSR and Express.js as the router.
+
+# Credits
+
+- Special thanks to FishingHacks for helping me with the project and giving me some ideas.
+- Client and Server
+  - The router found in ahead.js/server is from express. It's exported from there for convenience.
+  - The stuff from ahead.js/client is from react-router-dom. It's exported from there for convenience as well.
+  - Full credit to these libraries and their authors.
