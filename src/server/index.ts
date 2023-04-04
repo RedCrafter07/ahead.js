@@ -1,1 +1,1 @@
-export { Router } from 'express';
+export { Router, Request, Response } from 'express';
