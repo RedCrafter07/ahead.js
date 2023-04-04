@@ -1,3 +1,6 @@
+import { useLocation } from 'ahead.js/client';
+
 export default function () {
-	return <>Test page</>;
+	const location = useLocation();
+	return <>Test page at {location.pathname}</>;
 }
