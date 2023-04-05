@@ -34,7 +34,7 @@ async function genPreload(files: string[]) {
 	const preloadStatements = files
 		.map(
 			(_, i) =>
-				`let { app: app${i}, server: server${i} } = (await Preload${i}({app,server}));
+				`let { app: app${i}, server: server${i} } = await Preload${i}({app,server});
 	app = app${i};
 	server = server${i};`,
 		)
