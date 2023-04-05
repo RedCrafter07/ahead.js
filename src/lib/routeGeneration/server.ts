@@ -24,7 +24,7 @@ import preload from "./preload";
 ${apiRoutes.imports}
 
 (async () => {
-	const app = await preload(express());
+	const { app, server } = await preload(express());
 	const port = process.env.AHEAD_PORT ? process.env.AHEAD_PORT : 3000;
 
 	${apiRoutes.express}
@@ -37,7 +37,7 @@ ${apiRoutes.imports}
 
 	${serverRouter}
 
-	app.listen(port, () => {console.log("Listening on port " + port)})
+	server.listen(port, () => {console.log("Listening on port " + port)})
 })()
 `;
 }
