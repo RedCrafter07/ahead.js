@@ -32,14 +32,18 @@ async function genImports(files: string[]) {
 
 async function genPreload(files: string[]) {
 	const preloadStatements = files
-		.map((_, i) => `app = await Preload${i}(app);`)
+		.map((_, i) => `app = (await Preload${i}({app,server})).app;`)
 		.join('	\n');
 
-	return `import express from "express";\n\nexport default async function preload(app: express.Express) {
-${preloadStatements}
+	return `import express from 'express';
+import { createServer } from 'http';
 
-return app;
-	}`;
+export default async function preload(app: express.Express) {
+	const server = createServer(app);
+	${preloadStatements}
+
+	return {app,server};
+}`;
 }
 
 export default async function generatePreload() {
