@@ -1,5 +1,9 @@
 import { Preload } from 'ahead.js';
 
+// This function is called before the server initializes the routes found in src/pages
+// It might be useful for some packages which depend on the server instance.
+// You get the a express app and a http server, both of which should be returned like in the example below.
+
 const preload: Preload = ({ app, server }) => {
 	return { app, server };
 };
