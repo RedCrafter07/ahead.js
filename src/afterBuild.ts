@@ -41,4 +41,6 @@ import path from 'path';
 
 	await copyFiles(__dirname);
 	await copyFile('../package.json', '../dist/package.json');
+	await copyFile('../README.md', '../dist/README.md');
+	await copyFile('../LICENSE', '../dist/LICENSE');
 })();
