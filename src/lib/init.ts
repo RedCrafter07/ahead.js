@@ -50,7 +50,6 @@ export default async function init(cwd: string) {
 			path.join(cwd, '.gitignore'),
 		);
 
-	// check if src/pages has any files
 	const pages = await readdir(path.join(cwd, 'src', 'pages'), {
 		withFileTypes: true,
 	});
@@ -59,6 +58,26 @@ export default async function init(cwd: string) {
 		await copyFile(
 			path.join(__dirname, 'default', 'index.tsx.txt'),
 			path.join(cwd, 'src', 'pages', 'index.tsx'),
+		);
+
+	const server = await readdir(path.join(cwd, 'src', 'server'), {
+		withFileTypes: true,
+	});
+
+	if (server.length == 0)
+		await copyFile(
+			path.join(__dirname, 'default', 'api.ts.txt'),
+			path.join(cwd, 'src', 'pages', 'api.ts'),
+		);
+
+	const preload = await readdir(path.join(cwd, 'src', 'preload'), {
+		withFileTypes: true,
+	});
+
+	if (preload.length == 0)
+		await copyFile(
+			path.join(__dirname, 'default', 'preload.ts.txt'),
+			path.join(cwd, 'src', 'preload', 'preload.ts'),
 		);
 }
 

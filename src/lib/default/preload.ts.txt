@@ -1,0 +1,7 @@
+import { Preload } from 'ahead.js';
+
+const preload: Preload = ({ app, server }) => {
+	return { app, server };
+};
+
+export default preload;
