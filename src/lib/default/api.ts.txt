@@ -1,5 +1,10 @@
 import { Router } from 'ahead.js/server';
 
+// Files in the server folder are for creating the server-side of your app using express routers.
+// As this file is called api.ts, it will be accessible at /api.
+// [!] Subdirectories are not allowed in this folder.
+// [!] Access at / is not possible, as it is occupied by the client-side of your app.
+
 const router = Router();
 
 router.get('/', (req, res) => {
