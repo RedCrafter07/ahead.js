@@ -38,7 +38,7 @@ export default async function init(cwd: string) {
 		path.join(cwd, '.ahead', 'build', 'pre', 'server', 'preload'),
 	);
 
-	if (await existsSync(path.join(cwd, 'tsconfig.json')))
+	if (!(await existsSync(path.join(cwd, 'tsconfig.json'))))
 		await copyFile(
 			path.join(__dirname, 'default', 'tsconfig.json.txt'),
 			path.join(cwd, 'tsconfig.json'),
