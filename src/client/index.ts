@@ -5,6 +5,8 @@ export {
 	useFetchers,
 	useActionData,
 	useFormAction,
+	useOutlet,
+	useOutletContext,
 	useHref,
 	Link,
 	LinkProps,
@@ -12,4 +14,6 @@ export {
 	FormProps,
 	ScrollRestoration,
 	ScrollRestorationProps,
+	Outlet,
+	OutletProps,
 } from 'react-router-dom';
