@@ -1,5 +1,5 @@
 import { existsSync } from 'fs';
-import { copyFile, symlink } from 'fs/promises';
+import { copyFile, readdir, symlink } from 'fs/promises';
 import path from 'path';
 import { initDir } from './util/initDirs';
 import chalk from 'chalk';
@@ -48,6 +48,17 @@ export default async function init(cwd: string) {
 		await copyFile(
 			path.join(__dirname, 'default', '.gitignore.txt'),
 			path.join(cwd, '.gitignore'),
+		);
+
+	// check if src/pages has any files
+	const pages = await readdir(path.join(cwd, 'src', 'pages'), {
+		withFileTypes: true,
+	});
+
+	if (pages.length == 0)
+		await copyFile(
+			path.join(__dirname, 'default', 'index.tsx.txt'),
+			path.join(cwd, 'src', 'pages', 'index.tsx'),
 		);
 }
 
