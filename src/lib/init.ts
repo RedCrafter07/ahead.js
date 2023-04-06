@@ -67,7 +67,7 @@ export default async function init(cwd: string) {
 	if (server.length == 0)
 		await copyFile(
 			path.join(__dirname, 'default', 'api.ts.txt'),
-			path.join(cwd, 'src', 'pages', 'api.ts'),
+			path.join(cwd, 'src', 'server', 'api.ts'),
 		);
 
 	const preload = await readdir(path.join(cwd, 'src', 'preload'), {
