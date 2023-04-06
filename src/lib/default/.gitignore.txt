@@ -131,4 +131,4 @@ dist
 
 
 # ahead.js
-*/.ahead/build/
+.ahead/build/
