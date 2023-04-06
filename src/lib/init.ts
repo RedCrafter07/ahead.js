@@ -1,5 +1,5 @@
 import { existsSync } from 'fs';
-import { symlink } from 'fs/promises';
+import { copyFile, symlink } from 'fs/promises';
 import path from 'path';
 import { initDir } from './util/initDirs';
 import chalk from 'chalk';
@@ -37,6 +37,12 @@ export default async function init(cwd: string) {
 		path.join(cwd, 'src', 'preload'),
 		path.join(cwd, '.ahead', 'build', 'pre', 'server', 'preload'),
 	);
+
+	if (await existsSync(path.join(cwd, 'tsconfig.json')))
+		await copyFile(
+			path.join(__dirname, 'default', 'tsconfig.json.txt'),
+			path.join(cwd, 'tsconfig.json'),
+		);
 }
 
 async function createSafeSymlink(source: string, target: string) {
