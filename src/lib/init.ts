@@ -43,6 +43,12 @@ export default async function init(cwd: string) {
 			path.join(__dirname, 'default', 'tsconfig.json.txt'),
 			path.join(cwd, 'tsconfig.json'),
 		);
+
+	if (!(await existsSync(path.join(cwd, '.gitignore'))))
+		await copyFile(
+			path.join(__dirname, 'default', '.gitignore.txt'),
+			path.join(cwd, '.gitignore'),
+		);
 }
 
 async function createSafeSymlink(source: string, target: string) {
