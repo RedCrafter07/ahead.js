@@ -14,8 +14,7 @@ class PreServerPlugin {
 	apply(compiler: Compiler) {
 		compiler.hooks.beforeCompile.tapAsync(
 			'PreServerPlugin',
-			async (compilation, callback) => {
-				const mode = compiler.options.mode;
+			async (_compilation, callback) => {
 				const routes = await getRoutes(cwd);
 
 				console.log(
