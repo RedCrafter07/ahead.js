@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import { checkDirs } from './lib/init';
 import { Configuration } from 'webpack';
 import { root } from './paths';
+import { mkdir, rm } from 'fs/promises';
 
 const cwd = process.cwd();
 export const aheadDir = path.join(cwd, '.ahead');
@@ -14,6 +15,11 @@ export default async function build(mode: Configuration['mode']) {
 	console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Checking directories...');
 
 	await checkDirs(cwd);
+
+	console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Cleaning up old build...');
+
+	await rm(path.join(aheadDir, 'build', 'dist'), { recursive: true });
+	await mkdir(path.join(aheadDir, 'build', 'dist'), { recursive: true });
 
 	console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Starting build...');
 
