@@ -1,10 +1,8 @@
 import chalk from 'chalk';
-import { FSWatcher, watch } from 'fs';
 import path from 'path';
 import { buildAll, buildClient, buildServer } from './build';
 import { ChildProcess, spawn } from 'child_process';
 import chokidar from 'chokidar';
-import compileClient from './lib/compilers/client';
 
 class DevServer {
 	// the directory to watch
