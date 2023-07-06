@@ -1,15 +1,21 @@
 {
-  "name": "testing",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "ahead.js": "file:../dist"
-  }
+	"name": "testing",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "ahead dev",
+		"build": "ahead build",
+		"start": "ahead start",
+		"clean": "ahead cleanup"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"ahead.js": "file:../dist",
+		"autoprefixer": "^10.4.14",
+		"postcss": "^8.4.21",
+		"tailwindcss": "^3.3.1"
+	}
 }
