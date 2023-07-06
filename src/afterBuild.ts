@@ -1,7 +1,10 @@
+import chalk from 'chalk';
 import { copyFile, mkdir, readdir } from 'fs/promises';
 import path from 'path';
 
 (async () => {
+	console.log(chalk.gray('Running post build script...'));
+
 	async function copyFiles(dir: string) {
 		const files = await readdir(dir, { withFileTypes: true });
 		await Promise.all(
