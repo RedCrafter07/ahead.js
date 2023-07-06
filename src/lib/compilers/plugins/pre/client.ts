@@ -5,6 +5,7 @@ import path from 'path';
 import { aheadDir, root } from '../../../../paths';
 import { transform } from '../../../routeGeneration/client';
 import { copyFile, writeFile } from 'fs/promises';
+import { existsSync } from 'fs';
 
 const cwd = process.cwd();
 
@@ -33,14 +34,25 @@ class PreClientPlugin {
 					chalk.hex('#4F58FF')('Writing Ahead.js files...'),
 				);
 
-				await copyFile(
-					path.join(root, 'lib', 'client', 'router.tsx.txt'),
-					path.join(aheadDir, 'build', 'pre', 'client', 'router.tsx'),
-				);
-				await copyFile(
-					path.join(root, 'lib', 'client', 'index.tsx.txt'),
-					path.join(aheadDir, 'build', 'pre', 'client', 'index.tsx'),
-				);
+				if (
+					!(await existsSync(
+						path.join(aheadDir, 'build', 'pre', 'client', 'router.tsx'),
+					))
+				)
+					await copyFile(
+						path.join(root, 'lib', 'client', 'router.tsx.txt'),
+						path.join(aheadDir, 'build', 'pre', 'client', 'router.tsx'),
+					);
+
+				if (
+					!(await existsSync(
+						path.join(aheadDir, 'build', 'pre', 'client', 'index.tsx'),
+					))
+				)
+					await copyFile(
+						path.join(root, 'lib', 'client', 'index.tsx.txt'),
+						path.join(aheadDir, 'build', 'pre', 'client', 'index.tsx'),
+					);
 
 				callback();
 			},
