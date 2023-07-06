@@ -33,10 +33,12 @@ export default async function compileClient(
 		resolve: {
 			extensions: [
 				'.js',
-				'.ts',
 				'.jsx',
+				'.ts',
 				'.tsx',
 				'.css',
+				'.scss',
+				'.sass',
 				'.png',
 				'.svg',
 				'.ttf',
