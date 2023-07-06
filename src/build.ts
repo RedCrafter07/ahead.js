@@ -55,3 +55,19 @@ export async function buildAll(mode: Configuration['mode']) {
 
 	return Date.now() - startTime;
 }
+
+export async function buildServer(mode: Configuration['mode']) {
+	const startTime = Date.now();
+	await compileServer(path.join(aheadDir, 'build'), mode);
+	return Date.now() - startTime;
+}
+
+export async function buildClient(mode: Configuration['mode']) {
+	const startTime = Date.now();
+	await compileClient(
+		path.join(aheadDir, 'build'),
+		path.join(root, 'lib', 'client', 'template.html'),
+		mode,
+	);
+	return Date.now() - startTime;
+}
