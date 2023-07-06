@@ -12,8 +12,7 @@ class PreClientPlugin {
 	apply(compiler: Compiler) {
 		compiler.hooks.beforeCompile.tapAsync(
 			'PreClientPlugin',
-			async (compilation, callback) => {
-				const mode = compiler.options.mode;
+			async (_compilation, callback) => {
 				const routes = await getRoutes(cwd);
 
 				console.log(
