@@ -28,7 +28,7 @@ export default async function getRoutes(cwd: string) {
 		}))
 		.map((p) => ({
 			...p,
-			path: p.path.replace(path.sep, '/'),
+			path: p.path.replace(path.sep, '/').replace(/\{(\w+)\}/g, ':$1'),
 		}));
 
 	return contents;
