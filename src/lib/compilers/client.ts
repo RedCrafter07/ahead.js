@@ -4,6 +4,7 @@ import HTMLPlugin from 'html-webpack-plugin';
 import AheadLoggingPlugin from './plugins/logging';
 import PreClientPlugin from './plugins/pre/client';
 import { EsbuildPlugin } from 'esbuild-loader';
+import { sharedRules } from './sharedRules';
 
 export default async function compileClient(
 	dir: string,
@@ -58,34 +59,11 @@ export default async function compileClient(
 		module: {
 			rules: [
 				{
-					test: /\.css$/,
-					use: [
-						{ loader: 'style-loader' },
-						{ loader: 'css-loader' },
-						{ loader: 'postcss-loader' },
-					],
-				},
-				{
-					test: /\.s[ca]ss$/,
-					use: [
-						{ loader: 'style-loader' },
-						{ loader: 'css-loader' },
-						{ loader: 'sass-loader' },
-					],
-				},
-				{
-					test: /\.tsx?$/,
-					loader: 'esbuild-loader',
-					options: {
-						loader: 'tsx',
-						target: 'esnext',
-					},
-				},
-				{
 					test: /\.(png|ttf|svg|gif|webp|jpg|jpeg)$/, // to import images and fonts
 					loader: 'url-loader',
 					options: { limit: false },
 				},
+				...sharedRules(mode),
 			],
 		},
 	});

@@ -3,6 +3,7 @@ import { Configuration, webpack } from 'webpack';
 import AheadLoggingPlugin from './plugins/logging';
 import PreServerPlugin from './plugins/pre/server';
 import { EsbuildPlugin } from 'esbuild-loader';
+import { sharedRules } from './sharedRules';
 
 export default async function compileServer(
 	dir: string,
@@ -24,17 +25,7 @@ export default async function compileServer(
 			extensions: ['.ts', '.tsx', '.js', '.jsx'],
 		},
 		module: {
-			rules: [
-				{
-					test: /\.tsx?$/,
-					loader: 'esbuild-loader',
-					options: {
-						loader: 'tsx',
-						target: 'esnext',
-					},
-					exclude: /node_modules/,
-				},
-			],
+			rules: [...sharedRules(mode)],
 		},
 		plugins: [new PreServerPlugin(), new AheadLoggingPlugin('server')],
 		optimization: {
