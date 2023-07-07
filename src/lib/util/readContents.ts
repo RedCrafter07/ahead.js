@@ -10,7 +10,7 @@ export default async function readContents(dir: string) {
 		for (const item of content) {
 			if (item.isDirectory()) {
 				await getContents(path.join(dir, item.name));
-			} else {
+			} else if (item.isFile()) {
 				paths.push(path.join(dir, item.name));
 			}
 		}
