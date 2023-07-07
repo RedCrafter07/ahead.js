@@ -6,13 +6,13 @@ export default async function generateServerRoutes(routes: IndexedRoute[]) {
 	const apiRoutes = await generateApiRoutes();
 
 	const serverRouter = routes
-		.map((r) => r.path)
-		.map((p) => {
+		.map((r) => {
+			const p = r.path;
 			return `app.get("${p}", async (req, res) => {				
-	await sendClient(req, res)
-})`;
+		await sendClient(req, res, ${r.title ? `\`${r.title}\`` : 'undefined'});
+	})`;
 		})
-		.join('\n\n');
+		.join('\n\n	');
 
 	const clientDistDir = path.join(aheadDir, 'build', 'dist', 'client');
 
@@ -31,8 +31,8 @@ ${apiRoutes.imports}
 
 	app.use("/.ahead", express.static('${clientDistDir.replaceAll('\\', '\\\\')}'))
 
-	async function sendClient(req: express.Request, res: express.Response) {
-		res.send(await handleSSR(req));
+	async function sendClient(req: express.Request, res: express.Response, title: string | undefined) {
+		res.send(await handleSSR(req, title));
 	}
 
 	${serverRouter}
