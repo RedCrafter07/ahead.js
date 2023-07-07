@@ -9,7 +9,9 @@ export default async function generateServerRoutes(routes: IndexedRoute[]) {
 		.map((r) => {
 			const p = r.path;
 			return `app.get("${p}", async (req, res) => {				
-		await sendClient(req, res, ${r.title ? `\`${r.title}\`` : 'undefined'});
+		await sendClient(req, res, ${
+			r.title ? `\`${r.title.replace('`', '\\`')}\`` : 'undefined'
+		});
 	})`;
 		})
 		.join('\n\n	');
