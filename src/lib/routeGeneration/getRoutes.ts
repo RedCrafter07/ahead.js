@@ -4,11 +4,14 @@ import { readFile } from 'fs/promises';
 
 export default async function getRoutes(cwd: string) {
 	const routeDir = path.join(cwd, '.ahead', 'build', 'pre', 'client', 'routes');
-	const contents = (
+
+	const contents = (await readContents(routeDir)).filter(
+		(p) => p.endsWith('.ts') || p.endsWith('.tsx'),
+	);
+
+	const routes = (
 		await Promise.all(
-			(
-				await readContents(routeDir)
-			)
+			contents
 				.map((p) => ({
 					fileLocation: p,
 					path: p,
@@ -57,5 +60,5 @@ export default async function getRoutes(cwd: string) {
 			path: p.path.replace(path.sep, '/').replace(/\{(\w+)\}/g, ':$1'),
 		}));
 
-	return contents;
+	return routes;
 }
