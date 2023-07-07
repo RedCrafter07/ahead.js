@@ -103,7 +103,7 @@ class DevServer {
 
 		this.startProcess();
 
-		this.registerEvents();
+		this.registerServer();
 	}
 
 	startProcess() {
