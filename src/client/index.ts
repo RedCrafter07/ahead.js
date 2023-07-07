@@ -17,3 +17,4 @@ export {
 	Outlet,
 	OutletProps,
 } from 'react-router-dom';
+export { Index } from '../types/indexFile';
