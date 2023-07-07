@@ -1,5 +1,7 @@
 import './index.css';
 
+// @ahead/title Home
+
 export default function Home() {
 	return (
 		<>
