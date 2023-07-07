@@ -9,6 +9,7 @@ interface Route {
 export interface IndexedRoute {
 	path: string;
 	fileLocation: string;
+	title?: string;
 }
 
 function transformImports(data: IndexedRoute[]): {
