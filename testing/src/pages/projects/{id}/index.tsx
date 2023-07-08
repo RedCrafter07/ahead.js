@@ -1,3 +1,6 @@
+import { useParams } from 'ahead.js/client';
+
 export default function ProjectPage() {
-	return <>This is a project page!</>;
+	const { id } = useParams();
+	return <>This is a project page for {id}!</>;
 }
