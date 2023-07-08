@@ -2,7 +2,12 @@ import path from 'path';
 import { aheadDir } from '../../build';
 import type { IndexedRoute } from './client';
 import generateApiRoutes from './apiRoutes';
-export default async function generateServerRoutes(routes: IndexedRoute[]) {
+import { Configuration } from 'webpack';
+
+export default async function generateServerRoutes(
+	routes: IndexedRoute[],
+	mode: Configuration['mode'],
+) {
 	const apiRoutes = await generateApiRoutes();
 
 	const serverRouter = routes
@@ -28,16 +33,26 @@ ${apiRoutes.imports}
 (async () => {
 	const { app, server } = await preload(express());
 	const port = process.env.AHEAD_PORT ? process.env.AHEAD_PORT : 3000;
+	const mode = process.env.ENVIRONMENT ? process.env.ENVIRONMENT : 'production';
 
 	${apiRoutes.express}
 
 	app.use("/.ahead", express.static('${clientDistDir.replaceAll('\\', '\\\\')}'))
 
 	async function sendClient(req: express.Request, res: express.Response, title: string | undefined) {
-		res.send(await handleSSR(req, title));
+		res.send(await handleSSR(req, title, mode));
 	}
 
 	${serverRouter}
+
+	${
+		mode === 'development'
+			? `
+	app.get("*", async (req, res) => {
+		await sendClient(req, res, undefined);
+	})`
+			: ''
+	}
 
 	server.listen(port, () => {console.log("Listening on port " + port)})
 })()
