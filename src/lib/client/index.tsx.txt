@@ -2,9 +2,13 @@ import React from 'react';
 import { hydrateRoot, createRoot } from 'react-dom/client';
 import Router from './router';
 
+// AHEAD INDEX //
+
+const MainComponent = "AHEAD_MAIN_COMPONENT";
+
 // @ts-ignore;
-const env = AHEAD_ENV;
+const env = "AHEAD_ENV";
 
 if (env == 'development')
-	createRoot(document.getElementById('root')!).render(<Router />);
-else hydrateRoot(document.getElementById('root')!, <Router />);
+	createRoot(document.getElementById('root')!).render(MainComponent);
+else hydrateRoot(document.getElementById('root')!, MainComponent);
