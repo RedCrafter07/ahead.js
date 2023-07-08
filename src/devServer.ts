@@ -129,6 +129,7 @@ class DevServer {
 			{
 				env: {
 					AHEAD_PORT: this.port,
+					ENVIRONMENT: this.mode,
 				},
 			},
 		);
