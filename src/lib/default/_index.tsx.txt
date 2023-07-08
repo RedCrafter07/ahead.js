@@ -1,0 +1,14 @@
+import { Index } from 'ahead.js/client';
+
+// Welcome to the index file!
+// This file is optional, you may remove it if you don't need it.
+
+// This file is used between the router and the actual routes
+// so you can make page transitions, add global styles, etc.
+// You can also use it to add a global layout, like a navbar.
+
+const MyApp: Index = ({ content }) => {
+	return <>{content}</>;
+};
+
+export default MyApp;
