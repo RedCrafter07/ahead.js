@@ -29,7 +29,7 @@ export default async function handleSSR(
 		'utf-8',
 	);
 
-	if (mode == 'development') return htmlTemplate;
+	if (mode == 'development') return htmlTemplate.replace('AHEAD_TITLE', '');
 
 	// create a static router using React Router
 	const { dataRoutes, query } = createStaticHandler(routes);
@@ -54,7 +54,7 @@ export default async function handleSSR(
 				</React.StrictMode>,
 			),
 		)
-		.replace('<!-- AHEAD TITLE -->', `<title>${title || 'Ahead App'}</title>`);
+		.replace('AHEAD_TITLE', `<title>${title || 'Ahead App'}</title>`);
 
 	return html;
 }
