@@ -28,13 +28,13 @@ export default async function compileServer(
 			rules: [...sharedRules(mode)],
 		},
 		plugins: [new PreServerPlugin(), new AheadLoggingPlugin('server')],
-		optimization: {
+		/* optimization: {
 			minimizer: [
 				new EsbuildPlugin({
 					minify: true,
 				}),
 			],
-		},
+		}, */
 	});
 
 	return new Promise((resolve, reject) => {
