@@ -103,7 +103,7 @@ function transformToComponents(routes: Route[]) {
 			} else if (route.children && route.children.length > 0) {
 				routeString += `<Route path="${route.path}">\n`;
 				routeString += generateComponents(route.children);
-				routeString += `</Route>\n`;
+				routeString += `\n</Route>\n`;
 			} else {
 				routeString += `<Route ${
 					route.path ? `path="${route.path}"` : 'index'
