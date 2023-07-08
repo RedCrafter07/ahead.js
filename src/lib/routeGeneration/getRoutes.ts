@@ -22,14 +22,14 @@ export default async function getRoutes(cwd: string) {
 
 					let title: string | undefined;
 
-					const titleRegex = /(\/\/ ?@ahead\/title ).+/g;
+					const titleRegex = /<title>([^{}]+)<\/title>/g;
 
-					const lines = fileContent
-						.split('\n')
-						.filter((l) => l.match(titleRegex));
+					// get the first capture group
+					const titleMatch = titleRegex.exec(fileContent);
 
-					if (lines.length > 0)
-						title = lines[0].replace(/\/\/ ?@ahead\/title /g, '').trim();
+					if (titleMatch) {
+						title = titleMatch[1].trim();
+					}
 
 					return {
 						...p,
