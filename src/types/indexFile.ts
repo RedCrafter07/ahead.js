@@ -1,6 +1,4 @@
-import React from 'react';
-import { Component } from '../client/Component';
+import { Component, ComponentProps } from '../lib/client/Component';
 
-// type functionParams = { Component: Component; props: any };
-type functionParams = { content: any };
+type functionParams = { Router: Component; props: ComponentProps };
 export type Index = (params: functionParams) => JSX.Element;
