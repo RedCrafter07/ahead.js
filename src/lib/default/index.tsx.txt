@@ -1,5 +1,8 @@
-// @ahead/title Ahead.js - Welcome!
-
 export default function Home() {
-	return <p>Welcome to Ahead.js!</p>;
+	return (
+		<>
+			<title>Hello World!</title>
+			<p>Welcome to Ahead.js!</p>
+		</>
+	);
 }
