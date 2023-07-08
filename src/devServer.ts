@@ -21,7 +21,6 @@ class DevServer {
 		port: string,
 		mode: 'development' | 'production' = 'development',
 	) {
-		console.log(dir);
 		this.dir = path.resolve(dir);
 		this.port = port;
 		this.mode = mode;
