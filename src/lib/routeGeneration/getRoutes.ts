@@ -6,7 +6,8 @@ export default async function getRoutes(cwd: string) {
 	const routeDir = path.join(cwd, '.ahead', 'build', 'pre', 'client', 'routes');
 
 	const contents = (await readContents(routeDir)).filter(
-		(p) => p.endsWith('.ts') || p.endsWith('.tsx') || !p.endsWith('_index.tsx'),
+		(p) =>
+			(p.endsWith('.ts') || p.endsWith('.tsx')) && !p.endsWith('_index.tsx'),
 	);
 
 	const routes = (
