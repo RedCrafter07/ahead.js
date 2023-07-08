@@ -60,6 +60,12 @@ export default async function init(cwd: string) {
 			path.join(cwd, 'src', 'pages', 'index.tsx'),
 		);
 
+	if (!(await existsSync(path.join(cwd, 'src', 'pages', '_index.tsx'))))
+		await copyFile(
+			path.join(__dirname, 'default', '_index.tsx.txt'),
+			path.join(cwd, 'src', 'pages', '_index.tsx'),
+		);
+
 	const server = await readdir(path.join(cwd, 'src', 'server'), {
 		withFileTypes: true,
 	});
