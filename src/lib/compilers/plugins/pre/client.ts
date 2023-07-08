@@ -3,7 +3,7 @@ import getRoutes from '../../../routeGeneration/getRoutes';
 import chalk from 'chalk';
 import path from 'path';
 import { aheadDir, root } from '../../../../paths';
-import { transform } from '../../../routeGeneration/client';
+import { transformClient as transform } from '../../../routeGeneration/client';
 import { copyFile, writeFile } from 'fs/promises';
 import { existsSync } from 'fs';
 
@@ -26,7 +26,9 @@ class PreClientPlugin {
 						path.join(aheadDir, 'build', 'pre', 'client'),
 						'routes.tsx',
 					),
-					`import React from "react";\n${transform(routes)}`,
+					`import React from "react";\nimport {Route} from "react-router-dom";\n\n${transform(
+						routes,
+					)}`,
 				);
 
 				console.log(
