@@ -25,11 +25,11 @@ export default async function compileClient(
 			splitChunks: {
 				chunks: 'all',
 			},
-			minimizer: [
+			/* minimizer: [
 				new EsbuildPlugin({
 					minify: true,
 				}),
-			],
+			], */
 		},
 		resolve: {
 			extensions: [
