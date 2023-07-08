@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import path from 'path';
-import { buildAll, buildClient, buildServer } from './build';
+import { buildClient, buildServer } from './build';
 import { ChildProcess, spawn } from 'child_process';
 import chokidar from 'chokidar';
 
@@ -28,7 +28,8 @@ class DevServer {
 			'Running initial build...',
 		);
 
-		await buildAll('development');
+		await buildClient('development');
+		await buildServer('development');
 
 		console.log(
 			chalk.hex('#0099ff').bold('[ahead]'),
