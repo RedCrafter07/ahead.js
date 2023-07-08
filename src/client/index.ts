@@ -7,6 +7,7 @@ export {
 	useFormAction,
 	useOutlet,
 	useOutletContext,
+	useParams,
 	useHref,
 	Link,
 	LinkProps,
