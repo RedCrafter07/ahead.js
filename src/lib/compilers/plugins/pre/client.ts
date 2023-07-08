@@ -57,16 +57,22 @@ class PreClientPlugin {
 					// replace the // AHEAD INDEX // comment with the import
 					const indexImport = "import Index from './routes/_index'";
 
-					newIndex = newIndex
-						.replace('// AHEAD INDEX //', indexImport)
-						.replace(
-							'"AHEAD_MAIN_COMPONENT"',
-							'<Index content={<Router />} />',
-						);
+					newIndex = newIndex.replace('// AHEAD INDEX //', indexImport).replace(
+						"'AHEAD_MAIN_COMPONENT'",
+						`() => {
+	const location = useLocation();
+
+	return (
+		<>
+			<Index Router={Component} props={{content: routes, path: location}} />
+		</>
+	);
+}`,
+					);
 				} else
 					newIndex = newIndex
 						.replace('// AHEAD INDEX //', '')
-						.replace('"AHEAD_MAIN_COMPONENT"', '<Router />');
+						.replace("'AHEAD_MAIN_COMPONENT'", 'routes');
 
 				console.log(
 					chalk.hex('#0CCAE8').bold(`[client]`),
