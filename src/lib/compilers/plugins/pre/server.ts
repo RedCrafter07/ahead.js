@@ -15,6 +15,7 @@ class PreServerPlugin {
 		compiler.hooks.beforeCompile.tapAsync(
 			'PreServerPlugin',
 			async (_compilation, callback) => {
+				const mode = compiler.options.mode;
 				const routes = await getRoutes(cwd);
 
 				console.log(
@@ -54,7 +55,12 @@ class PreServerPlugin {
 
 				await writeFile(
 					path.join(aheadDir, 'build', 'pre', 'server', 'index.tsx'),
-					await generateServerRoutes(routes),
+					await generateServerRoutes(routes, mode),
+				);
+
+				console.log(
+					chalk.hex('#009BFF').bold(`[server]`),
+					chalk.gray('Pre-Compilation finished!'),
 				);
 
 				callback();
