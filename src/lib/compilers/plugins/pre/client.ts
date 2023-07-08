@@ -34,6 +34,42 @@ class PreClientPlugin {
 
 				console.log(
 					chalk.hex('#0CCAE8').bold(`[client]`),
+					chalk.hex('#4F58FF')('Checking for _index file...'),
+				);
+
+				const index = path.join(
+					aheadDir,
+					'build',
+					'pre',
+					'client',
+					'routes',
+					'_index.tsx',
+				);
+
+				let newIndex = (
+					await readFile(
+						path.join(root, 'lib', 'client', 'index.tsx.txt'),
+						'utf-8',
+					)
+				).replace('AHEAD_ENV', mode!);
+
+				if (await existsSync(index)) {
+					// replace the // AHEAD INDEX // comment with the import
+					const indexImport = "import Index from './routes/_index'";
+
+					newIndex = newIndex
+						.replace('// AHEAD INDEX //', indexImport)
+						.replace(
+							'"AHEAD_MAIN_COMPONENT"',
+							'<Index content={<Router />} />',
+						);
+				} else
+					newIndex = newIndex
+						.replace('// AHEAD INDEX //', '')
+						.replace('"AHEAD_MAIN_COMPONENT"', '<Router />');
+
+				console.log(
+					chalk.hex('#0CCAE8').bold(`[client]`),
 					chalk.hex('#4F58FF')('Writing Ahead.js files...'),
 				);
 
@@ -44,12 +80,7 @@ class PreClientPlugin {
 
 				await writeFile(
 					path.join(aheadDir, 'build', 'pre', 'client', 'index.tsx'),
-					(
-						await readFile(
-							path.join(root, 'lib', 'client', 'index.tsx.txt'),
-							'utf-8',
-						)
-					).replace('AHEAD_ENV', `"${mode!}"`),
+					newIndex,
 				);
 
 				console.log(
