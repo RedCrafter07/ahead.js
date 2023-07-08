@@ -8,6 +8,7 @@ class DevServer {
 	// the directory to watch
 	dir: string;
 	port: string;
+	mode: 'development' | 'production';
 
 	// watchers
 	clientWatcher?: chokidar.FSWatcher;
@@ -15,9 +16,15 @@ class DevServer {
 
 	serverProcess?: ChildProcess;
 
-	constructor(dir: string, port: string) {
+	constructor(
+		dir: string,
+		port: string,
+		mode: 'development' | 'production' = 'development',
+	) {
+		console.log(dir);
 		this.dir = path.resolve(dir);
 		this.port = port;
+		this.mode = mode;
 	}
 
 	async start() {
@@ -28,8 +35,8 @@ class DevServer {
 			'Running initial build...',
 		);
 
-		await buildClient('development');
-		await buildServer('development');
+		await buildClient(this.mode);
+		await buildServer(this.mode);
 
 		console.log(
 			chalk.hex('#0099ff').bold('[ahead]'),
@@ -79,7 +86,7 @@ class DevServer {
 			chalk.hex('#0099ff').bold('[ahead]'),
 			'Client changed! Rebuilding...',
 		);
-		const buildTime = await buildClient('development');
+		const buildTime = await buildClient(this.mode);
 
 		console.log(
 			chalk.hex('#0099ff').bold('[ahead]'),
@@ -93,7 +100,7 @@ class DevServer {
 		this.serverProcess?.kill();
 
 		console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Rebuilding...');
-		const buildTime = await buildServer('development');
+		const buildTime = await buildServer(this.mode);
 
 		console.log(
 			chalk.hex('#0099ff').bold('[ahead]'),
