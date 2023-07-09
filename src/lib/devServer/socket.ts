@@ -14,7 +14,9 @@ class DevSocketServer {
 		if (this.started) return this;
 		this.started = true;
 
-		const io = new Server(this.port, {});
+		const io = new Server(this.port, {
+			transports: ['websocket'],
+		});
 
 		this.io = io;
 	}
@@ -40,7 +42,9 @@ class DevSocketClient {
 	protected port: number;
 
 	constructor(port: number) {
-		this.client = io(`http://localhost:${port}`);
+		this.client = io(`http://localhost:${port}`, {
+			transports: ['websocket'],
+		});
 		this.port = port;
 
 		this.client.on('reload', () => {
