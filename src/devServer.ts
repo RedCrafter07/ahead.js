@@ -57,7 +57,7 @@ class DevServer {
 		const directories = (await readdir(this.dir, { withFileTypes: true }))
 			.filter((f) => f.isDirectory())
 			.map((d) => d.name)
-			.filter((f) => !serverDirectories.includes(f));
+			.filter((f) => !serverDirectories.includes(f) && f != 'pages');
 
 		console.log(
 			chalk.hex('#0099ff').bold('[ahead]'),
