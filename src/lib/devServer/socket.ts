@@ -34,3 +34,17 @@ class DevSocketServer {
 		return this;
 	}
 }
+
+class DevSocketClient {
+	client: Socket;
+	port: number;
+
+	constructor(port: number) {
+		this.client = io(`http://localhost:${port}`);
+		this.port = port;
+
+		this.client.on('reload', () => {
+			window.location.reload();
+		});
+	}
+}
