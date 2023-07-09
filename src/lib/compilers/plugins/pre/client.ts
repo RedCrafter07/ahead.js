@@ -72,7 +72,10 @@ class PreClientPlugin {
 				} else
 					newIndex = newIndex
 						.replace('// AHEAD INDEX //', '')
-						.replace("'AHEAD_MAIN_COMPONENT'", 'routes');
+						.replace(
+							"'AHEAD_MAIN_COMPONENT'",
+							'() => <Routes>{routes}</Routes>',
+						);
 
 				console.log(
 					chalk.hex('#0CCAE8').bold(`[client]`),
