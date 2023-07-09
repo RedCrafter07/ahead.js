@@ -206,6 +206,7 @@ class DevServer {
 		this.serverProcess?.kill();
 		this.clientWatcher?.close();
 		this.serverWatcher?.close();
+		this.directoryWatcher?.close();
 	}
 }
 
