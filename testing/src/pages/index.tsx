@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { startTransition } from 'react';
+import Counter from '../components/Counter';
 
 export default function Home() {
 	const navigate = useNavigate();
@@ -7,7 +8,7 @@ export default function Home() {
 	return (
 		<div>
 			<title>Home</title>
-			<div className='p-2 container mx-auto flex flex-col gap-2'>
+			<div className='p-2 container mx-auto'>
 				<p className='text-3xl'>This is a test!</p>
 				<button
 					onClick={() => startTransition(() => navigate('/test'))}
@@ -15,6 +16,10 @@ export default function Home() {
 				>
 					A button!
 				</button>
+
+				<br />
+
+				<Counter />
 			</div>
 		</div>
 	);
