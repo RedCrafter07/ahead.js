@@ -4,11 +4,13 @@ import { buildClient, buildServer } from './build';
 import { ChildProcess, spawn } from 'child_process';
 import chokidar from 'chokidar';
 import { readdir } from 'fs/promises';
+import { DevSocketServer } from './lib/devServer/socket';
 
 class DevServer {
 	// the directory to watch
 	dir: string;
 	port: string;
+	devServerPort: number = 4002;
 	mode: 'development' | 'production';
 
 	// watchers
@@ -17,6 +19,8 @@ class DevServer {
 	directoryWatcher?: chokidar.FSWatcher;
 
 	serverProcess?: ChildProcess;
+
+	socket?: DevSocketServer;
 
 	constructor(
 		dir: string,
@@ -116,6 +120,8 @@ class DevServer {
 			},
 		);
 
+		this.socket = new DevSocketServer(this.devServerPort).start();
+
 		this.startProcess();
 
 		this.registerEvents();
@@ -203,6 +209,7 @@ class DevServer {
 
 	async stop() {
 		console.log('Closing dev server...');
+		this.socket?.stop();
 		this.serverProcess?.kill();
 		this.clientWatcher?.close();
 		this.serverWatcher?.close();
