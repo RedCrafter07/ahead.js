@@ -57,11 +57,15 @@ class DevServer {
 		const directories = (await readdir(this.dir, { withFileTypes: true }))
 			.filter((f) => f.isDirectory())
 			.map((d) => d.name)
-			.filter((f) => serverDirectories.includes(f));
+			.filter((f) => !serverDirectories.includes(f));
 
 		console.log(
 			chalk.hex('#0099ff').bold('[ahead]'),
-			chalk.gray(`Watching other directories: ${directories.join(', ')}}`),
+			chalk.gray(
+				`Watching other directories: ${
+					directories.length > 0 ? directories.join(', ') : chalk.italic('None')
+				}`,
+			),
 		);
 
 		directories.forEach((d) => {
