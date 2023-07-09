@@ -36,8 +36,8 @@ class DevSocketServer {
 }
 
 class DevSocketClient {
-	client: Socket;
-	port: number;
+	private client: Socket;
+	protected port: number;
 
 	constructor(port: number) {
 		this.client = io(`http://localhost:${port}`);
