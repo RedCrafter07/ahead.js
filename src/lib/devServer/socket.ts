@@ -2,9 +2,9 @@ import { Server } from 'socket.io';
 import { io, Socket } from 'socket.io-client';
 
 class DevSocketServer {
-	started: boolean = false;
-	port: number = 4000;
-	io?: Server;
+	protected started: boolean = false;
+	protected port: number = 4000;
+	private io?: Server;
 
 	constructor(port: number) {
 		this.port = port;
