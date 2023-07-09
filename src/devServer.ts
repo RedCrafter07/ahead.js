@@ -59,6 +59,11 @@ class DevServer {
 			.map((d) => d.name)
 			.filter((f) => serverDirectories.includes(f));
 
+		console.log(
+			chalk.hex('#0099ff').bold('[ahead]'),
+			chalk.gray(`Watching other directories: ${directories.join(', ')}}`),
+		);
+
 		directories.forEach((d) => {
 			this.clientWatcher?.add(path.join(this.dir, d).replace(path.sep, '/'));
 		});
