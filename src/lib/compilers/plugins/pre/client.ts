@@ -77,6 +77,12 @@ class PreClientPlugin {
 							'() => <Routes>{routes}</Routes>',
 						);
 
+				if (mode == 'development')
+					newIndex = newIndex.replace(
+						'// AHEAD DEV //',
+						`import {DevSocketClient} from "ahead.js/client/dev/socket"\nnew DevSocketClient(4002)`,
+					);
+
 				console.log(
 					chalk.hex('#0CCAE8').bold(`[client]`),
 					chalk.hex('#4F58FF')('Writing Ahead.js files...'),
