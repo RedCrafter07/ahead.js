@@ -3,6 +3,7 @@ import path from 'path';
 import { buildClient, buildServer } from './build';
 import { ChildProcess, spawn } from 'child_process';
 import chokidar from 'chokidar';
+import { readdir } from 'fs/promises';
 
 class DevServer {
 	// the directory to watch
@@ -42,6 +43,8 @@ class DevServer {
 			'Watching for changes...',
 		);
 
+		const serverDirectories = ['preload', 'server'];
+
 		this.clientWatcher = chokidar.watch(
 			path.join(this.dir, 'pages').replace(path.sep, '/'),
 			{
@@ -49,8 +52,19 @@ class DevServer {
 			},
 		);
 
+		// scan other directories for changes
+		// get all directories in dir
+		const directories = (await readdir(this.dir, { withFileTypes: true }))
+			.filter((f) => f.isDirectory())
+			.map((d) => d.name)
+			.filter((f) => serverDirectories.includes(f));
+
+		directories.forEach((d) => {
+			this.clientWatcher?.add(path.join(this.dir, d).replace(path.sep, '/'));
+		});
+
 		this.serverWatcher = chokidar.watch(
-			['preload', 'server'].map((p) =>
+			serverDirectories.map((p) =>
 				path.join(this.dir, p).replace(path.sep, '/'),
 			),
 			{
@@ -76,6 +90,10 @@ class DevServer {
 
 	registerClient() {
 		this.clientWatcher?.on('change', async () => {
+			await this.handleClient();
+		});
+
+		this.clientWatcher?.on('unlink', async () => {
 			await this.handleClient();
 		});
 	}
