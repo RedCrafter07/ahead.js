@@ -48,3 +48,5 @@ class DevSocketClient {
 		});
 	}
 }
+
+export { DevSocketServer, DevSocketClient };
