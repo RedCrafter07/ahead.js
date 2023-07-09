@@ -14,6 +14,7 @@ class DevServer {
 	// watchers
 	clientWatcher?: chokidar.FSWatcher;
 	serverWatcher?: chokidar.FSWatcher;
+	directoryWatcher?: chokidar.FSWatcher;
 
 	serverProcess?: ChildProcess;
 
@@ -49,6 +50,7 @@ class DevServer {
 			path.join(this.dir, 'pages').replace(path.sep, '/'),
 			{
 				persistent: true,
+				ignoreInitial: true,
 			},
 		);
 
@@ -58,6 +60,39 @@ class DevServer {
 			.filter((f) => f.isDirectory())
 			.map((d) => d.name)
 			.filter((f) => !serverDirectories.includes(f) && f != 'pages');
+
+		this.directoryWatcher = chokidar.watch(this.dir, {
+			persistent: true,
+			ignoreInitial: true,
+		});
+
+		this.directoryWatcher.on('addDir', (dir) => {
+			if (dir.includes('node_modules')) {
+				return;
+			}
+
+			if (!this.clientWatcher?.getWatched().hasOwnProperty(dir)) {
+				this.clientWatcher?.add(dir);
+				console.log(
+					chalk.hex('#0099ff').bold('[ahead]'),
+					chalk.gray('Now watching directory ' + dir),
+				);
+			}
+		});
+
+		this.directoryWatcher.on('unlinkDir', (dir) => {
+			if (dir.includes('node_modules')) {
+				return;
+			}
+
+			if (this.clientWatcher?.getWatched().hasOwnProperty(dir)) {
+				this.clientWatcher?.unwatch(dir);
+				console.log(
+					chalk.hex('#0099ff').bold('[ahead]'),
+					chalk.gray('No longer watching directory ' + dir),
+				);
+			}
+		});
 
 		console.log(
 			chalk.hex('#0099ff').bold('[ahead]'),
