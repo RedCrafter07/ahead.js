@@ -8,7 +8,6 @@ import Component from 'ahead.js/lib/client/Component';
 
 const MainComponent = 'AHEAD_MAIN_COMPONENT';
 
-// @ts-ignore
 const env = 'AHEAD_ENV';
 
 // @ts-ignore
