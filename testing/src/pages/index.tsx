@@ -11,7 +11,7 @@ export default function Home() {
 			<div className='p-2 container mx-auto'>
 				<p className='text-3xl'>This is a test!</p>
 				<button
-					onClick={() => startTransition(() => navigate('/test'))}
+					onClick={() => navigate('/test')}
 					className='p-2 bg-green-600 rounded-lg text-white hover:opacity-90 active:scale-95 transition-all duration-75'
 				>
 					A button!
