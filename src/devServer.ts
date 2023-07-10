@@ -75,6 +75,9 @@ class DevServer {
 				return;
 			}
 
+			if (serverDirectories.map((d) => path.join(this.dir, d)).includes(dir))
+				return;
+
 			if (!this.clientWatcher?.getWatched().hasOwnProperty(dir)) {
 				this.clientWatcher?.add(dir);
 				console.log(
@@ -134,7 +137,7 @@ class DevServer {
 	}
 
 	registerServer() {
-		this.serverWatcher?.once('change', async () => {
+		this.serverWatcher?.on('change', async () => {
 			await this.handleServer();
 		});
 	}
@@ -180,8 +183,6 @@ class DevServer {
 		console.log(chalk.hex('#0099ff').bold('[ahead]'), 'Starting server...');
 
 		this.startProcess();
-
-		this.registerServer();
 	}
 
 	startProcess() {
