@@ -20,7 +20,7 @@ class DevSocketServer {
 
 		console.log(
 			chalk.hex('#0099ff').bold('[ahead]'),
-			chalk.gray(`Socket server started on port ${this.port}.`),
+			chalk.gray(`Hot reload server started on port ${this.port}.`),
 		);
 
 		this.io = io;
