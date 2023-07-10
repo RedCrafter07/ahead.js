@@ -7,10 +7,17 @@ class DevSocketClient {
 	constructor(port: number) {
 		this.client = io(`http://localhost:${port}`, {
 			transports: ['websocket'],
+			autoConnect: true,
+			reconnection: true,
 		});
 		this.port = port;
 
+		this.client.on('connect', () => {
+			console.log(`[ahead] Socket connected on port ${this.port}.`);
+		});
+
 		this.client.on('reload', () => {
+			console.log(`[ahead] Reloading...`);
 			window.location.reload();
 		});
 	}
