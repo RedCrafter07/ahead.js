@@ -1,3 +1,4 @@
+import { Config as SwcConfig } from '@swc/core';
 import { Configuration, RuleSetRule } from 'webpack';
 
 export const sharedRules = (mode: Configuration['mode']): RuleSetRule[] => {
@@ -28,19 +29,27 @@ export const sharedRules = (mode: Configuration['mode']): RuleSetRule[] => {
 						jsx: true,
 						dynamicImport: true,
 					},
+					minify: {
+						compress: {
+							unused: mode === 'production',
+						},
+						mangle: mode === 'production',
+					},
 					transform: {
 						react: {
 							runtime: 'automatic',
 							development: mode === 'development',
 						},
 					},
+					preserveAllComments: mode === 'production',
 				},
 				module: {
 					type: 'commonjs',
+					lazy: true,
 				},
 				sourceMaps: mode === 'development',
 				minify: mode === 'production',
-			},
+			} as SwcConfig,
 		},
 	] as RuleSetRule[];
 };
