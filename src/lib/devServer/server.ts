@@ -28,6 +28,10 @@ class DevSocketServer {
 
 	reload() {
 		if (!this.io) return;
+		console.log(
+			chalk.hex('#0099ff').bold('[ahead]'),
+			chalk.gray('Emitting reload...'),
+		);
 		this.io?.emit('reload');
 	}
 
