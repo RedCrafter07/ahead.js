@@ -6,7 +6,6 @@ import chalk from 'chalk';
 
 const neededDirs = [
 	['.ahead', 'build', 'dist'],
-	['.ahead', 'config'],
 	['.ahead', 'build', 'pre', 'client'],
 	['.ahead', 'build', 'pre', 'server'],
 	['src', 'pages'],
