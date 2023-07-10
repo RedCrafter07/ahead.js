@@ -3,7 +3,6 @@ import { webpack, Configuration } from 'webpack';
 import HTMLPlugin from 'html-webpack-plugin';
 import AheadLoggingPlugin from './plugins/logging';
 import PreClientPlugin from './plugins/pre/client';
-import { EsbuildPlugin } from 'esbuild-loader';
 import { sharedRules } from './sharedRules';
 
 export default async function compileClient(
