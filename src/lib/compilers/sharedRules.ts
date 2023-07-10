@@ -30,12 +30,6 @@ export const sharedRules = (mode: Configuration['mode']): RuleSetRule[] => {
 						jsx: true,
 						dynamicImport: true,
 					},
-					minify: {
-						compress: {
-							unused: mode === 'production',
-						},
-						mangle: mode === 'production',
-					},
 					transform: {
 						react: {
 							runtime: 'automatic',
