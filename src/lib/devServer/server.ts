@@ -5,6 +5,7 @@ class DevSocketServer {
 	protected started: boolean = false;
 	protected port: number = 4000;
 	private io?: Server;
+	protected lastReload: number = Date.now();
 
 	constructor(port: number) {
 		this.port = port;
@@ -23,6 +24,10 @@ class DevSocketServer {
 			chalk.gray(`Hot reload server started on port ${this.port}.`),
 		);
 
+		io.on('connection', (socket) => {
+			socket.emit('last', this.lastReload);
+		});
+
 		this.io = io;
 
 		return this;
@@ -35,6 +40,8 @@ class DevSocketServer {
 			chalk.gray('Emitting reload...'),
 		);
 		this.io?.emit('reload');
+
+		this.lastReload = Date.now();
 	}
 
 	stop() {
