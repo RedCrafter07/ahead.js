@@ -87,8 +87,13 @@ class DevServer {
 			}
 		});
 
-		this.directoryWatcher.on('unlinkDir', (dir) => {
+		this.directoryWatcher.on('unlinkDir', async (dir) => {
 			if (dir.includes('node_modules')) {
+				return;
+			}
+
+			if (serverDirectories.map((d) => path.join(this.dir, d)).includes(dir)) {
+				await this.handleServer();
 				return;
 			}
 
