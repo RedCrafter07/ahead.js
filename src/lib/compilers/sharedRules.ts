@@ -17,6 +17,7 @@ export const sharedRules = (mode: Configuration['mode']): RuleSetRule[] => {
 				{ loader: 'style-loader' },
 				{ loader: 'css-loader' },
 				{ loader: 'sass-loader' },
+				{ loader: 'postcss-loader' },
 			],
 		},
 		{
