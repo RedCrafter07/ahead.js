@@ -1,8 +1,22 @@
 import { useNavigate } from 'react-router-dom';
 import Counter from '../components/Counter';
+import { io } from 'socket.io-client';
+import { useEffect } from 'react';
 
 export default function Home() {
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		const socket = io('http://localhost:3000', {
+			transports: ['websocket'],
+		});
+
+		socket.on('connect', () => {
+			console.log('Connected!');
+		});
+
+		socket.connect();
+	}, []);
 
 	return (
 		<div>
