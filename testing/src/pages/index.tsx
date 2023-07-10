@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { startTransition } from 'react';
 import Counter from '../components/Counter';
 
 export default function Home() {
