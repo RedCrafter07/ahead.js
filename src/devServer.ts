@@ -155,6 +155,8 @@ class DevServer {
 		);
 		const buildTime = await buildClient(this.mode);
 
+		this.socket?.reload();
+
 		console.log(
 			chalk.hex('#0099ff').bold('[ahead]'),
 			`Rebuilt in ${buildTime}ms`,
