@@ -120,7 +120,8 @@ class DevServer {
 			},
 		);
 
-		this.socket = new DevSocketServer(this.devServerPort).start();
+		this.socket = new DevSocketServer(this.devServerPort);
+		this.socket.start();
 
 		this.startProcess();
 
