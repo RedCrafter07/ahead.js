@@ -6,7 +6,7 @@ Yet another React.js framework
 
 ## Note
 
-### This project is in early development and is not ready for production use yet. Please be patient!
+### Although some versions might be available: This project is in early development and is not ready for production use yet. Please be patient!
 
 Ahead.js is a framework inspired by Next.js by Vercel. It's a framework which uses [React.js](https://react.dev), [Express.js](https://expressjs.com) and [React Router](https://reactrouter.com) to create a server side rendered application.
 
