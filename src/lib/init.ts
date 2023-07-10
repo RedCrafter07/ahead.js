@@ -9,13 +9,13 @@ const neededDirs = [
 	['.ahead', 'build', 'pre', 'client'],
 	['.ahead', 'build', 'pre', 'server'],
 	['src', 'pages'],
-	['src', 'server'],
-	['src', 'preload'],
 ];
+
+const initDirs = [...neededDirs, ['src', 'server'], ['src', 'preload']];
 
 export default async function init(cwd: string) {
 	await Promise.all(
-		neededDirs
+		initDirs
 			.map((p) => path.join(path.join(cwd, ...p)))
 			.map(async (d) => {
 				await initDir(d);
