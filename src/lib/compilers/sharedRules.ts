@@ -46,7 +46,6 @@ export const sharedRules = (mode: Configuration['mode']): RuleSetRule[] => {
 				},
 				module: {
 					type: 'commonjs',
-					lazy: true,
 				},
 				sourceMaps: mode === 'development',
 				minify: mode === 'production',
