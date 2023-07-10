@@ -24,6 +24,8 @@ class DevSocketServer {
 		);
 
 		this.io = io;
+
+		return this;
 	}
 
 	reload() {
