@@ -19,6 +19,7 @@ export default async function compileClient(
 		output: {
 			path: `${dir}/dist/client`,
 			filename: '[name].js',
+			chunkFilename: '[name].bundle.js',
 			publicPath: '/.ahead/',
 		},
 		optimization: {
