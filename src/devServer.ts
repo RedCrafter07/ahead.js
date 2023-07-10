@@ -4,7 +4,7 @@ import { buildClient, buildServer } from './build';
 import { ChildProcess, spawn } from 'child_process';
 import chokidar from 'chokidar';
 import { readdir } from 'fs/promises';
-import { DevSocketServer } from './lib/devServer/socket';
+import { DevSocketServer } from './lib/devServer/server';
 
 class DevServer {
 	// the directory to watch
