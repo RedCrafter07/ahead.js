@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { existsSync } from 'fs';
 import { readdir } from 'fs/promises';
 import path from 'path';
 
@@ -52,9 +53,17 @@ export default async function preload(app: express.Express) {
 }
 
 export default async function generatePreload() {
-	const files = await scanDir(
-		path.join(process.cwd(), '.ahead', 'build', 'pre', 'server', 'preload'),
+	const preloadPath = path.join(
+		process.cwd(),
+		'.ahead',
+		'build',
+		'pre',
+		'server',
+		'preload',
 	);
+	if (!(await existsSync(preloadPath))) return await genPreload([]);
+
+	const files = await scanDir(preloadPath);
 
 	const imports = await genImports(files);
 	const preload = await genPreload(files);
