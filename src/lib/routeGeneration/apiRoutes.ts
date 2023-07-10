@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { Router } from 'express';
+import { existsSync } from 'fs';
 import { readdir } from 'fs/promises';
 import path from 'path';
 
@@ -51,9 +52,18 @@ async function genExpress(data: { path: string; file: string }[]) {
 }
 
 export default async function generateApiRoutes() {
-	const files = await scanDir(
-		path.join(process.cwd(), '.ahead', 'build', 'pre', 'server', 'routes'),
+	const apiRouteDir = path.join(
+		process.cwd(),
+		'.ahead',
+		'build',
+		'pre',
+		'server',
+		'routes',
 	);
+
+	if (!(await existsSync(apiRouteDir))) return { imports: '', express: '' };
+
+	const files = await scanDir(apiRouteDir);
 
 	const routes = await genRoutes(files);
 	const imports = await genImports(files);
