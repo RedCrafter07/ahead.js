@@ -39,8 +39,8 @@ ${apiRoutes.imports}
 
 	app.use("/.ahead", express.static('${clientDistDir.replaceAll('\\', '\\\\')}'))
 
-	async function sendClient(req: express.Request, res: express.Response, title: string | undefined) {
-		res.send(await handleSSR(req, title, mode));
+	async function sendClient(req: express.Request, res: express.Response) {
+		res.send(await handleSSR(req, mode));
 	}
 
 	${serverRouter}
@@ -49,7 +49,7 @@ ${apiRoutes.imports}
 		mode === 'development'
 			? `
 	app.get("*", async (req, res) => {
-		await sendClient(req, res, undefined);
+		await sendClient(req, res);
 	})`
 			: ''
 	}
