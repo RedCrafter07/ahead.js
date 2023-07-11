@@ -7,10 +7,7 @@ const preload: Preload = ({ app, server }) => {
 	});
 
 	io.on('connection', (socket) => {
-		console.log('a user connected');
-		socket.on('disconnect', () => {
-			console.log('user disconnected');
-		});
+		socket.send('Hello World!');
 	});
 
 	return { app, server };
