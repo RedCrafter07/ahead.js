@@ -4,6 +4,7 @@ import HTMLPlugin from 'html-webpack-plugin';
 import AheadLoggingPlugin from './plugins/logging';
 import PreClientPlugin from './plugins/pre/client';
 import { sharedRules } from './sharedRules';
+import ClientAssetsPlugin from './plugins/pre/clientAssets';
 
 export default async function compileClient(
 	dir: string,
@@ -49,10 +50,8 @@ export default async function compileClient(
 		},
 		plugins: [
 			new PreClientPlugin(),
-			new HTMLPlugin({
-				template: htmlTemplate,
-			}),
 			new AheadLoggingPlugin('client'),
+			new ClientAssetsPlugin(),
 		],
 		module: {
 			rules: [
