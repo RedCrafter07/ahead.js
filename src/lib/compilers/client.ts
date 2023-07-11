@@ -12,9 +12,7 @@ export default async function compileClient(
 ) {
 	const compiler = webpack({
 		mode,
-		entry: {
-			client: path.join(dir, 'pre', 'client', 'index.tsx'),
-		},
+		entry: [path.join(dir, 'pre', 'client', 'index.tsx')],
 		output: {
 			path: `${dir}/dist/client`,
 			filename: '[name].js',
