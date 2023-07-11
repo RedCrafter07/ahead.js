@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { hydrateRoot, createRoot } from 'react-dom/client';
 import { BrowserRouter, useLocation, Routes } from 'react-router-dom';
 import routes from './routes';
@@ -15,9 +15,11 @@ const env = 'AHEAD_ENV';
 // @ts-ignore
 if (env == 'development')
 	createRoot(document.getElementById('root')!).render(
-		<BrowserRouter>
-			<MainComponent />
-		</BrowserRouter>,
+		<Suspense>
+			<BrowserRouter>
+				<MainComponent />
+			</BrowserRouter>
+		</Suspense>,
 	);
 else
 	hydrateRoot(
