@@ -1,11 +1,7 @@
 // @ts-ignore
 import routerData from './.ssr';
 import React from 'react';
-import {
-	RouteObject,
-	RouterProvider,
-	createBrowserRouter,
-} from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import {
 	createStaticHandler,
 	createStaticRouter,
