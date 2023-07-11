@@ -10,34 +10,11 @@ export default async function getRoutes(cwd: string) {
 			(p.endsWith('.ts') || p.endsWith('.tsx')) && !p.endsWith('_index.tsx'),
 	);
 
-	const routes = (
-		await Promise.all(
-			contents
-				.map((p) => ({
-					fileLocation: p,
-					path: p,
-				}))
-				.map(async (p) => {
-					const fileContent = await readFile(p.fileLocation, 'utf-8');
-
-					let title: string | undefined;
-
-					const titleRegex = /<title>([^{}]+)<\/title>/g;
-
-					// get the first capture group
-					const titleMatch = titleRegex.exec(fileContent);
-
-					if (titleMatch) {
-						title = titleMatch[1].trim();
-					}
-
-					return {
-						...p,
-						title,
-					};
-				}),
-		)
-	)
+	const routes = contents
+		.map((p) => ({
+			fileLocation: p,
+			path: p,
+		}))
 		// remove the routeDir and the file extension
 		.map((p) => ({
 			...p,
