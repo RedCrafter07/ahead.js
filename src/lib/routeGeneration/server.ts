@@ -14,9 +14,7 @@ export default async function generateServerRoutes(
 		.map((r) => {
 			const p = r.path;
 			return `app.get("${p}", async (req, res) => {				
-		await sendClient(req, res, ${
-			r.title ? `\`${r.title.replace('`', '\\`')}\`` : 'undefined'
-		});
+		await sendClient(req, res);
 	})`;
 		})
 		.join('\n\n	');
@@ -40,7 +38,7 @@ ${apiRoutes.imports}
 	app.use("/.ahead", express.static('${clientDistDir.replaceAll('\\', '\\\\')}'))
 
 	async function sendClient(req: express.Request, res: express.Response) {
-		res.send(await handleSSR(req, mode));
+		await handleSSR(req, res, mode);
 	}
 
 	${serverRouter}
