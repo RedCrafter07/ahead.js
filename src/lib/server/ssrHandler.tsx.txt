@@ -8,9 +8,11 @@ import {
 	StaticRouterProvider,
 } from 'react-router-dom/server';
 import { readFile } from 'fs/promises';
-import { renderToString } from 'react-dom/server';
+import { renderToPipeableStream } from 'react-dom/server';
 import path from 'path';
 import express from 'express';
+// @ts-ignore
+import assets from './assets.json';
 
 const routes: RouteObject[] = routerData;
 
@@ -19,14 +21,11 @@ Credit to the React Router team for the createFetchRequest method:
 https://github.com/remix-run/react-router/blob/5a43e19573c11d1469fd43ef1fddaf7be02abca5/examples/ssr-data-router/src/entry.server.tsx#L32-L65
 */
 
-export default async function handleSSR(req: express.Request, mode: string) {
-	const htmlTemplate = await readFile(
-		path.join(__dirname, '..', 'client', 'index.html'),
-		'utf-8',
-	);
-
-	if (mode == 'development') return htmlTemplate.replace('AHEAD_TITLE', '');
-
+export default async function handleSSR(
+	req: express.Request,
+	res: express.Response,
+	mode: string,
+) {
 	// create a static router using React Router
 	const { dataRoutes, query } = createStaticHandler(routes);
 
@@ -39,30 +38,21 @@ export default async function handleSSR(req: express.Request, mode: string) {
 
 	const router = createStaticRouter(dataRoutes, ctx);
 
-	const rendered = await renderToString(
+	const renderComponent = (
 		<React.StrictMode>
 			<div id='root'>
 				<StaticRouterProvider router={router} context={ctx} />
 			</div>
-		</React.StrictMode>,
+		</React.StrictMode>
 	);
 
-	let title: string | undefined;
-
-	const titleRegex = /<title>([^{}]+)<\/title>/g;
-
-	// get the first capture group
-	const titleMatch = titleRegex.exec(rendered);
-
-	if (titleMatch) {
-		title = titleMatch[1].trim();
-	}
-
-	const html = htmlTemplate
-		.replace('<div id="root"></div>', rendered)
-		.replace('AHEAD_TITLE', `${title ? `<title>${title}</title>` : ''}`);
-
-	return html;
+	const { pipe } = renderToPipeableStream(renderComponent, {
+		bootstrapScripts: assets.map((a) => `/.ahead/${a}`),
+		onShellReady() {
+			res.setHeader('content-type', 'text/html');
+			pipe(res);
+		},
+	});
 }
 
 function createFetchRequest(req: express.Request): Request {
