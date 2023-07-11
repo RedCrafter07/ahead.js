@@ -1,6 +1,6 @@
 {
 	"name": "ahead.js",
-	"version": "1.0.1",
+	"version": "1.0.1-beta.1",
 	"description": "Another React Framework",
 	"main": "./index.js",
 	"scripts": {
