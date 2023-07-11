@@ -10,7 +10,7 @@
 		"ahead": "cli/index.js"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "RedCrafter07",
 	"license": "GPL-3.0-or-later",
 	"dependencies": {
 		"@swc/core": "^1.3.68",
