@@ -1,4 +1,6 @@
-import { Link, useLocation } from 'ahead.js/client';
+// import { Link, useLocation } from 'ahead.js/client';
+
+import { Link, useLocation } from 'react-router-dom';
 
 export default function () {
 	const location = useLocation();

@@ -1,4 +1,4 @@
-import { useParams } from 'ahead.js/client';
+import { useParams } from 'react-router-dom';
 
 export default function ProjectPage() {
 	const { id } = useParams();

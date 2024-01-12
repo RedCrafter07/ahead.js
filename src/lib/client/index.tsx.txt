@@ -2,16 +2,19 @@ import React, { Suspense } from 'react';
 import { hydrateRoot, createRoot } from 'react-dom/client';
 import { BrowserRouter, useLocation, Routes } from 'react-router-dom';
 import routes from './routes';
-import Component from 'ahead.js/lib/client/Component';
+import { ComponentProps } from 'ahead.js/lib/client/Component';
 
 // AHEAD DEV //
 
 // AHEAD INDEX //
 
+function Component(props: ComponentProps) {
+	return <Routes>{props.content}</Routes>;
+}
+
 const MainComponent = 'AHEAD_MAIN_COMPONENT';
 
 const env = 'AHEAD_ENV';
-
 // @ts-ignore
 if (env == 'development')
 	createRoot(document.getElementById('root')!).render(

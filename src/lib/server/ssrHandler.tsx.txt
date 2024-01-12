@@ -45,14 +45,18 @@ export default async function handleSSR(
 			</div>
 		</React.StrictMode>
 	);
-
-	const { pipe } = renderToPipeableStream(renderComponent, {
+	
+	const { pipe, abort } = renderToPipeableStream(renderComponent, {
 		bootstrapScripts: assets.map((a) => `/.ahead/${a}`),
 		onShellReady() {
 			res.setHeader('content-type', 'text/html');
 			pipe(res);
 		},
+		onError(error, errorInfo) {
+			console.log(`Error while rendering:\n\n${error}\n\n-------------------------------\n\n${errorInfo}`);
+		},
 	});
+	setTimeout(abort, 1000); // 1 secon d should be enough to render
 }
 
 function createFetchRequest(req: express.Request): Request {
