@@ -38,6 +38,7 @@ ${apiRoutes.imports}
 	app.use("/.ahead", express.static('${clientDistDir.replaceAll('\\', '\\\\')}'))
 
 	async function sendClient(req: express.Request, res: express.Response) {
+		console.log("Handling SSR:", req.url);
 		await handleSSR(req, res, mode);
 	}
 
